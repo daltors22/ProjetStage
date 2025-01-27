@@ -5,3 +5,5 @@ assets/data/
 package-lock.json
 
 .database_password
+
+venv/
