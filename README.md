@@ -160,7 +160,9 @@ git push
 # MAC OS SETUP -> dependencies with python /!\ 3.10 /!\ import - requirements.txt 
 # TERMINAL COMMANDES :
 #
-# python3 -m venv venv
-# source venv/bin/activate (mac/linux) /// .\venv\Scripts\activate (winddows)
-# install dependencies -> pip install -r requirements.txt
+# IF the activate file is not in venv/bin -> remove the venv and retry first step
+#
+# 1- python3.10 -m venv venv
+# 2- source venv/bin/activate (mac/linux) /// .\venv\Scripts\activate (winddows)
+# 3- install dependencies -> pip install -r requirements.txt
 #

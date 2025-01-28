@@ -804,6 +804,68 @@ function manageOptions() {
 }
 
 /**
+ * Here is the PRESET BUTTON LOGIC 
+ * 1 -> Stricte / 2 -> Modérée / 3 -> Libre
+ */
+document.getElementById('stricte').addEventListener('click', function () {
+    applyPreset({
+        // OPTIONS VALUE
+        pitchDist: 0,
+        durationFactor: 1,
+        durationGap: 0,
+        alpha: 5,
+        // OPTIONS CHECK
+        pitch: true,
+        rhythm: true,
+        transpose: false,
+        contour: false
+    });
+});
+
+document.getElementById('moderee').addEventListener('click', function () {
+    applyPreset({
+        // OPTIONS VALUE
+        pitchDist: 1,
+        durationFactor: 1.25,
+        durationGap: 0.5,
+        alpha: 25,
+        // OPTIONS CHECK
+        pitch: true,
+        rhythm: true,
+        transpose: true,
+        contour: false
+    });
+});
+
+document.getElementById('libre').addEventListener('click', function () {
+    applyPreset({
+        // OPTIONS VALUE
+        pitchDist: 2,
+        durationFactor: 2,
+        durationGap: 1,
+        alpha: 50,
+        // OPTIONS CHECK
+        pitch: false,
+        rhythm: false,
+        transpose: true,
+        contour: true
+    });
+});
+
+function applyPreset(preset) {
+    // VALUES
+    document.getElementById('pitch-dist-select').value = preset.pitchDist;
+    document.getElementById('duration-factor-select').value = preset.durationFactor;
+    document.getElementById('duration-gap-select').value = preset.durationGap;
+    document.getElementById('alpha-select').value = preset.alpha;
+    // CHECKBOX 
+    document.getElementById('pitch-cb').checked = preset.pitch;
+    document.getElementById('rhythm-cb').checked = preset.rhythm;
+    document.getElementById('transpose-cb').checked = preset.transpose;
+    document.getElementById('contour-cb').checked = preset.contour;
+}
+
+/**
  * 
  * @param {*} blackKey 
  * @returns the next white key
