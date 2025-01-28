@@ -12,11 +12,13 @@
     
     <!-- CSS Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
     <!-- JS Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <!-- Vexflow for the music notes -->
     <script src="https://unpkg.com/vexflow/releases/vexflow-debug.js"></script>
@@ -52,11 +54,12 @@
       <h1>Rechercher un motif musical</h1>
       <div id="music-score"></div>
       <div class="clear_buttons">
-        <button class='stave_buttons', id='clear_all'>Supprimer <br> tout</button>
-        <button class='stave_buttons', id='clear_last_note'>Supprimer la dernière note</button>
-        <button class='stave_buttons' id="play_melody">Jouer la mélodie</button>
-        <button class='stave_buttons' id="send-button">Recherche</button>
+        <button type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;", id='clear_all'>Supprimer tout</button>
+        <button type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;", id='clear_last_note'>Supprimer la dernière note</button>
+        <button type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;", id="play_melody">Jouer la mélodie</button>
+        <button type="button" class="btn  text-white" style="background-color: #006485;", id="send-button">Recherche</button>
       </div>
+      <br>
       <div class="wrapper">
         <header>
           <h2>Utilisez le piano pour d&eacute;finir le motif musical</h2>
@@ -148,53 +151,74 @@
             <% } %>
           </select>
         </div>
-        <div class='general-options'>
-          <label class='tooltip-lb' id='pitch-lb'>
-            <input id='pitch-cb' type='checkbox' checked>
-            Hauteur des notes
-            <!-- <span class='tooltiptext'>Permet de prendre en compte / ignorer la hauteur des notes</span> -->
-          </label><br>
-          <label class='tooltip-lb' id='rhythm-lb'>
-            <input id='rhythm-cb' type='checkbox' checked>
-            Rythme
-            <!-- <span class='tooltiptext'>Permet de prendre en compte / ignorer le rythme (la durée) des notes</span> -->
-          </label><br>
-          <label id='transpose-lb' class='tooltip-lb'>
-            <input id='transpose-cb' type='checkbox'>
-            Autoriser les transpositions
-            <!-- <span class='tooltiptext'>Permet d'obtenir les partitions dont la hauteur des notes de la mélodie est décalée</span> -->
-          </label><br>
-          <label id='contour-lb' class='tooltip-lb'>
-            <input id='contour-cb' type='checkbox'>
-            Correspondance du contour seulement
-            <!-- <span class='tooltiptext'>Garde seulement le signe des intervalles entres les notes (haut, bas, égal).</span> -->
-          </label>
+        
+        <!-- START TEST PRESET BUTTON -->
+        <div class="flex-column">
+        <h1>Preset selection</h1>
+        <h4>sélectionnez la Correspondance</h4>
+          <div class="flex-row" style=" display: flex; gap:50px;">
+            <button id="stricte" type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;">Recherche exacte</button>
+            <button id="moderee" type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;">Recherche avec varations</button>
+            <button id="libre" type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;">Recherche exploratoire</button>
+            <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+            Options avancés
+            </button>
+          </div>
         </div>
-        <div class='fuzzy-options'>
-          <label class='tooltip-lb' id='pitch-dist-lb'>
-            Tolérance de hauteur
-            <input type=number min=0 value=0 step=0.5 id='pitch-dist-select' class='nb-select'>
-            <!-- <span class='tooltiptext'>Permet d'augmenter la tolérance sur la hauteur de note (en tons)</span> -->
-          </label><br>
 
-          <label class='tooltip-lb' id='duration-dist-lb'>
-            Facteur de durée
-            <input type=number min=1 value=1 step=0.125 id='duration-factor-select' class='nb-select-large'>
-            <!-- <span class='tooltiptext'>Permet d'augmenter la tolérance sur la durée des notes (coefficient multiplicateur).</span> -->
-          </label><br>
+        <div style="min-height: 120px;">
+          <div class="collapse collapse-horizontal" id="collapseWidthExample">
+            <div class="card card-body" style="width: 300px;">
+              <div class='general-options'>
+                <label class='tooltip-lb' id='pitch-lb'>
+                  <input id='pitch-cb' type='checkbox' checked>
+                  Hauteur des notes
+                  <!-- <span class='tooltiptext'>Permet de prendre en compte / ignorer la hauteur des notes</span> -->
+                </label><br>
+                <label class='tooltip-lb' id='rhythm-lb'>
+                  <input id='rhythm-cb' type='checkbox' checked>
+                  Rythme
+                  <!-- <span class='tooltiptext'>Permet de prendre en compte / ignorer le rythme (la durée) des notes</span> -->
+                </label><br>
+                <label id='transpose-lb' class='tooltip-lb'>
+                  <input id='transpose-cb' type='checkbox'>
+                  Autoriser les transpositions
+                  <!-- <span class='tooltiptext'>Permet d'obtenir les partitions dont la hauteur des notes de la mélodie est décalée</span> -->
+                </label><br>
+                <label id='contour-lb' class='tooltip-lb'>
+                  <input id='contour-cb' type='checkbox'>
+                  Correspondance du contour seulement
+                  <!-- <span class='tooltiptext'>Garde seulement le signe des intervalles entres les notes (haut, bas, égal).</span> -->
+                </label>
+              </div>
+              <div class='fuzzy-options'>
+                <label class='tooltip-lb' id='pitch-dist-lb'>
+                  Tolérance de hauteur
+                  <input type=number min=0 value=0 step=0.5 id='pitch-dist-select' class='nb-select'>
+                  <!-- <span class='tooltiptext'>Permet d'augmenter la tolérance sur la hauteur de note (en tons)</span> -->
+                </label><br>
 
-          <label class='tooltip-lb' id='sequencing-dist-lb'>
-            Écart de durée
-            <input type=number min=0 value=0 step=0.125 id='duration-gap-select' class='nb-select-large'>
-            <!-- <span class='tooltiptext'>Permet de sauter des notes (en durée : 1 pour pleine, 0.5 pour ronde, 0.25 pour croche, ...)</span> -->
-          </label><br>
+                <label class='tooltip-lb' id='duration-dist-lb'>
+                  Facteur de durée
+                  <input type=number min=1 value=1 step=0.125 id='duration-factor-select' class='nb-select-large'>
+                  <!-- <span class='tooltiptext'>Permet d'augmenter la tolérance sur la durée des notes (coefficient multiplicateur).</span> -->
+                </label><br>
 
-          <label class='tooltip-lb' id='alpha-lb'>
-            Alpha
-            <input type=number min=0 max=100 value=0 step=5 id='alpha-select' class='nb-select'>
-            %
-            <!-- <span class='tooltiptext'>Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.</span> -->
-          </label>
+                <label class='tooltip-lb' id='sequencing-dist-lb'>
+                  Écart de durée
+                  <input type=number min=0 value=0 step=0.125 id='duration-gap-select' class='nb-select-large'>
+                  <!-- <span class='tooltiptext'>Permet de sauter des notes (en durée : 1 pour pleine, 0.5 pour ronde, 0.25 pour croche, ...)</span> -->
+                </label><br>
+
+                <label class='tooltip-lb' id='alpha-lb'>
+                  Alpha
+                  <input type=number min=0 max=100 value=0 step=5 id='alpha-select' class='nb-select'>
+                  %
+                  <!-- <span class='tooltiptext'>Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.</span> -->
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

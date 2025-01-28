@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  gap: 10px;
 }
 .stave_buttons {
   width: 130px;
@@ -41,7 +42,9 @@
   overflow-x: auto;
   /* width: 500px; */
 }
-#send-button {
+
+/* DESACTIVATE -> BOOTSTRAP USE */
+/*#send-button {
   padding: 10px;
   border-radius: 20px;
   background-color: #62aadd;
@@ -52,6 +55,7 @@
   outline: none;
   cursor: pointer;
 }
+*/
 .options-row label,
 .options-row input[type="radio"],
 .options-row button {
