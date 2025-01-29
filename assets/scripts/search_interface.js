@@ -813,7 +813,7 @@ document.getElementById('stricte').addEventListener('click', function () {
         pitchDist: 0,
         durationFactor: 1,
         durationGap: 0,
-        alpha: 5,
+        alpha: 0,
         // OPTIONS CHECK
         pitch: true,
         rhythm: true,
@@ -822,13 +822,35 @@ document.getElementById('stricte').addEventListener('click', function () {
     });
 });
 
-document.getElementById('moderee').addEventListener('click', function () {
+document.addEventListener('DOMContentLoaded', function () {
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+      new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+
+document.getElementById('modereeMelo').addEventListener('click', function () {
     applyPreset({
         // OPTIONS VALUE
         pitchDist: 1,
         durationFactor: 1.25,
         durationGap: 0.5,
-        alpha: 25,
+        alpha: 0,
+        // OPTIONS CHECK
+        pitch: true,
+        rhythm: false,
+        transpose: true,
+        contour: false
+    });
+});
+
+document.getElementById('modereeRythm').addEventListener('click', function () {
+    applyPreset({
+        // OPTIONS VALUE
+        pitchDist: 1,
+        durationFactor: 1.25,
+        durationGap: 0.5,
+        alpha: 0,
         // OPTIONS CHECK
         pitch: true,
         rhythm: true,
@@ -843,7 +865,7 @@ document.getElementById('libre').addEventListener('click', function () {
         pitchDist: 2,
         durationFactor: 2,
         durationGap: 1,
-        alpha: 50,
+        alpha: 0,
         // OPTIONS CHECK
         pitch: false,
         rhythm: false,
