@@ -184,16 +184,31 @@ header input {
 
 .below-keyboard {
     display: flex;
+    gap: 5px;
 }
 
 .rhythm-modif {
     display: flex;
-    margin: 10px;
+    margin: 0px;
+    gap: 5px;
+    align-items: center;
+}
+
+.rhythm-modif-bt {
+   height: 50px;
+   border-radius: 5px;
+   width: 40px;
+   background-color: white;
+}
+
+.rhythm-modif-bt img {
+  border-radius: 3px;
 }
 
 .octave-modif-bt-div {
     display: grid;
     margin-right: 10px;
+    gap: 10px;
 }
 
 .octave-modif {
@@ -203,7 +218,9 @@ header input {
 }
 
 .rhythm-modif-bt, .octave-modif-bt {
-    border-radius: 8px;
+    border-radius: 3px;
+    border: none;
+
 }
 
 .white-label {
@@ -326,6 +343,30 @@ header input {
 .tooltip-lb:hover .tooltiptext {
     visibility: visible;
 }
+
+/* tooltip + alt for information button with hover */
+/* Renommer la classe pour éviter les conflits */
+.tooltip-lb-alt {
+  position: relative;
+  display: inline-block;
+}
+.tooltip-lb-alt .tooltiptext {
+  visibility: hidden;
+  width: 150px;
+  background: #18767ed0;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+
+  position: absolute;
+  z-index: 1;
+}
+.tooltip-lb-alt:hover .tooltiptext {
+  visibility: visible;
+}
+
+
 .info-note {
     background: cornsilk;
     border: 1px solid black;

@@ -376,6 +376,61 @@ const searchButtonHandler = function() {
 }
 
 /**
+ *  This function add a new button -options avancés- for open/close this option
+ */
+document.addEventListener("DOMContentLoaded", function () {
+    // Sélectionner tous les boutons qui ont un attribut data-button
+    const toggleButtons = document.querySelectorAll("[data-button]");
+
+    toggleButtons.forEach(button => {
+        // Obtenez l'id du collapse associé à ce bouton -> id button -> toggleButton1 ...
+        const targetId = button.getAttribute("data-bs-target").substring(1); // On enlève le "#" de l'id
+        const target = document.getElementById(targetId);
+
+        // Créer une instance du Collapse Bootstrap pour ce collapse
+        const collapseInstance = new bootstrap.Collapse(target, { toggle: false });
+
+        // Gérer l'état "ouvert" du collapse
+        target.addEventListener("shown.bs.collapse", function () {
+            button.textContent = "Fermer"; // Change le texte du bouton après l'ouverture
+            button.setAttribute("aria-expanded", "true"); // Modifie l'aria-expanded
+
+            // Supprime la logique d'ouverture
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-target");
+
+            // Ajouter la logique pour fermer
+            button.addEventListener("click", function () {
+                collapseInstance.hide(); // Ferme la div
+            });
+        });
+
+        // Gérer l'état "fermé" du collapse
+        target.addEventListener("hidden.bs.collapse", function () {
+            button.textContent = "Options avancées"; // Change le texte du bouton après la fermeture
+            button.setAttribute("aria-expanded", "false"); // Modifie l'aria-expanded
+
+            // Rétablir la logique d'ouverture
+            button.setAttribute("data-bs-toggle", "collapse");
+            button.setAttribute("data-bs-target", "#" + targetId);
+
+            // Ajouter un listener pour rouvrir la div
+            button.addEventListener("click", function () {
+                collapseInstance.show(); // Ouvre la div
+            });
+        });
+
+        // Clic initial pour ouvrir ou fermer la div
+        button.addEventListener("click", function () {
+            if (button.getAttribute("aria-expanded") === "false") {
+                collapseInstance.show(); // Ouvre la div
+            }
+        });
+    });
+});
+
+
+/**
  * This function increases/decreases the volume according to the user input
  * */
 const handleVolume = (e) => {
@@ -819,13 +874,6 @@ document.getElementById('stricte').addEventListener('click', function () {
         rhythm: true,
         transpose: false,
         contour: false
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-      new bootstrap.Tooltip(tooltipTriggerEl);
     });
 });
 

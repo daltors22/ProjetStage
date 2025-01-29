@@ -12,13 +12,17 @@ html, body {
     display: flex;
     flex-direction: column;
 }
+
+body {
+    padding-top: 50px;
+}
 .content-wrapper {
     flex: 1; /* S'étend pour occuper tout l'espace entre le header et le footer */
     display: flex;
     flex-direction: column; /* Organisation flexible pour le contenu interne */
     padding: 20px; /* Ajoute des marges internes pour aérer le contenu */
     box-sizing: border-box; /* Inclut les marges et paddings dans le calcul de la taille */
-    overflow: auto; /* Permet le défilement si le contenu dépasse */
+    overflow: none; /* Permet le défilement si le contenu dépasse */
 }
 .main-container {
     margin: 0 auto;
@@ -73,7 +77,7 @@ form button[type="submit"] {
     padding: 2rem 0 !important;
     text-align: center !important;
     /* S'assure que le footer ne "flotte" pas au milieu */
-    position: relative;
+    position: relative !important;
     bottom: 0;
     width: 100%;
 }
