@@ -880,9 +880,9 @@ document.getElementById('stricte').addEventListener('click', function () {
 document.getElementById('modereeMelo').addEventListener('click', function () {
     applyPreset({
         // OPTIONS VALUE
-        pitchDist: 1,
+        pitchDist: 2,
         durationFactor: 1.25,
-        durationGap: 0.5,
+        durationGap: 0,
         alpha: 0,
         // OPTIONS CHECK
         pitch: true,
@@ -895,12 +895,12 @@ document.getElementById('modereeMelo').addEventListener('click', function () {
 document.getElementById('modereeRythm').addEventListener('click', function () {
     applyPreset({
         // OPTIONS VALUE
-        pitchDist: 1,
+        pitchDist: 0,
         durationFactor: 1.25,
         durationGap: 0.5,
         alpha: 0,
         // OPTIONS CHECK
-        pitch: true,
+        pitch: false,
         rhythm: true,
         transpose: true,
         contour: false
@@ -1162,7 +1162,9 @@ function initTooltips() {
         'pitch-dist-lb': "Permet d'augmenter la tolérance sur la hauteur de note (en tons), ou sur les intervalles (si transposition est coché).",
         'duration-dist-lb': "Permet d'augmenter la tolérance sur la durée des notes (coefficient multiplicateur).",
         'sequencing-dist-lb': "Permet de sauter des notes (en durée : 1 pour pleine, 0.5 pour ronde, 0.25 pour croche, ...).",
-        'alpha-lb': "Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha."
+        'alpha-lb': "Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.",
+        'stricte': "Permet une recherche sans tolérances",
+        'modereeMelo': "Permet la recherche avec une hauteur de note décalée mais ignore la rythmique"
     };
 
     Object.keys(info_texts).forEach(id => {
