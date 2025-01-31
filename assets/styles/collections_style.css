@@ -1,7 +1,7 @@
 /* Conteneur principal */
 .father_container {
     display: flex;
-    overflow: hidden;
+    overflow: none;
     margin: 0; 
     flex: 1;
     /* height: calc(100vh - 229px); */

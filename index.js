@@ -11,7 +11,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 
-const uri = 'neo4j://localhost:7687'; // default dor cypher-shell neo4j://localhost:7687
+const uri = 'bolt://10.211.55.4:7687'; // default dor cypher-shell neo4j://localhost:7687
 // cypher-shell -u neo4j -p root -a neo4j://localhost:7687
 const user = 'neo4j'
 // const password = '12345678';
@@ -445,6 +445,7 @@ app.post('/compileFuzzy', (req, res) => {
  * @constant /formulateQuery
  */
 app.post('/formulateQuery', (req, res) => {
+    console.log(req.body);
     // Get the params
     const notes = req.body.notes;
     let pitch_distance = req.body.pitch_distance;

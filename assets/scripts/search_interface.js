@@ -332,7 +332,7 @@ const searchButtonHandler = function() {
     const duration_gap_select = document.getElementById('duration-gap-select');
     const alpha_select = document.getElementById('alpha-select');
     const transposition_cb = document.getElementById('transpose-cb');
-    const contour_cb = document.getElementById('contour-cb');
+    //const contour_cb = document.getElementById('contour-cb');
 
     // Check that melody is not empty
     if (melody.length == 0) {
@@ -374,6 +374,61 @@ const searchButtonHandler = function() {
 
 
 }
+
+/**
+ *  This function add a new button -options avancés- for open/close this option
+ */
+document.addEventListener("DOMContentLoaded", function () {
+    // Sélectionner tous les boutons qui ont un attribut data-button
+    const toggleButtons = document.querySelectorAll("[data-button]");
+
+    toggleButtons.forEach(button => {
+        // Obtenez l'id du collapse associé à ce bouton -> id button -> toggleButton1 ...
+        const targetId = button.getAttribute("data-bs-target").substring(1); // On enlève le "#" de l'id
+        const target = document.getElementById(targetId);
+
+        // Créer une instance du Collapse Bootstrap pour ce collapse
+        const collapseInstance = new bootstrap.Collapse(target, { toggle: false });
+
+        // Gérer l'état "ouvert" du collapse
+        target.addEventListener("shown.bs.collapse", function () {
+            button.textContent = "Fermer"; // Change le texte du bouton après l'ouverture
+            button.setAttribute("aria-expanded", "true"); // Modifie l'aria-expanded
+
+            // Supprime la logique d'ouverture
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-target");
+
+            // Ajouter la logique pour fermer
+            button.addEventListener("click", function () {
+                collapseInstance.hide(); // Ferme la div
+            });
+        });
+
+        // Gérer l'état "fermé" du collapse
+        target.addEventListener("hidden.bs.collapse", function () {
+            button.textContent = "Options avancées"; // Change le texte du bouton après la fermeture
+            button.setAttribute("aria-expanded", "false"); // Modifie l'aria-expanded
+
+            // Rétablir la logique d'ouverture
+            button.setAttribute("data-bs-toggle", "collapse");
+            button.setAttribute("data-bs-target", "#" + targetId);
+
+            // Ajouter un listener pour rouvrir la div
+            button.addEventListener("click", function () {
+                collapseInstance.show(); // Ouvre la div
+            });
+        });
+
+        // Clic initial pour ouvrir ou fermer la div
+        button.addEventListener("click", function () {
+            if (button.getAttribute("aria-expanded") === "false") {
+                collapseInstance.show(); // Ouvre la div
+            }
+        });
+    });
+});
+
 
 /**
  * This function increases/decreases the volume according to the user input
@@ -488,7 +543,7 @@ const matchRhythmCbHandler = () => {
  */
 const contourAndTranspositionHandler = (sender_id) => {
     const transpose_cb = document.getElementById('transpose-cb');
-    const contour_cb = document.getElementById('contour-cb');
+    //const contour_cb = document.getElementById('contour-cb');
     const pitch_cb = document.getElementById('pitch-cb');
     const pitch_dist_cb = document.getElementById('pitch-dist-select');
 
@@ -498,9 +553,9 @@ const contourAndTranspositionHandler = (sender_id) => {
         contour_cb.checked = false;
     }
     // if (event.srcElement.id == 'contour-cb' && contour_cb.checked) {
-    if (sender_id == 'contour-cb' && contour_cb.checked) {
-        transpose_cb.checked = false;
-    }
+    //if (sender_id == 'contour-cb' && contour_cb.checked) {
+    //    transpose_cb.checked = false;
+    //}
 
     // If contour is checked, disable pitch param
     if (contour_cb.checked) {
@@ -785,7 +840,7 @@ function manageOptions() {
     const pitch_cb = document.getElementById('pitch-cb');
     const rhythm_cb = document.getElementById('rhythm-cb');
     const transpose_cb = document.getElementById('transpose-cb');
-    const contour_cb = document.getElementById('contour-cb');
+    //const contour_cb = document.getElementById('contour-cb');
 
     // Add an event listener for the clear-buttons to call the corresponding method
     clearAllButton.addEventListener('click', clear_all_pattern);
@@ -800,8 +855,92 @@ function manageOptions() {
     rhythm_cb.addEventListener('click', matchRhythmCbHandler );
 
     transpose_cb.addEventListener('click', () => contourAndTranspositionHandler('transpose-cb'));
-    contour_cb.addEventListener('click', () => contourAndTranspositionHandler('contour-cb'));
+   // contour_cb.addEventListener('click', () => contourAndTranspositionHandler('contour-cb'));
 }
+
+/**
+ * Here is the PRESET BUTTON LOGIC 
+ * 1 -> Stricte / 2 -> Modérée / 3 -> Libre
+ */
+document.getElementById('stricte').addEventListener('click', function () {
+    applyPreset({
+        // OPTIONS VALUE
+        pitchDist: 0,
+        durationFactor: 1,
+        durationGap: 0,
+        alpha: 0,
+        // OPTIONS CHECK
+        pitch: true,
+        rhythm: true,
+        transpose: false,
+        contour: false,
+        // OPTION SELECT BACKGROUND
+
+    });
+});
+
+document.getElementById('modereeMelo').addEventListener('click', function () {
+    applyPreset({
+        // OPTIONS VALUE
+        pitchDist: 2,
+        durationFactor: 1.25,
+        durationGap: 0,
+        alpha: 0,
+        // OPTIONS CHECK
+        pitch: true,
+        rhythm: false,
+        transpose: true,
+        contour: false
+    });
+});
+
+document.getElementById('modereeRythm').addEventListener('click', function () {
+    applyPreset({
+        // OPTIONS VALUE
+        pitchDist: 0,
+        durationFactor: 1.25,
+        durationGap: 0.5,
+        alpha: 0,
+        // OPTIONS CHECK
+        pitch: false,
+        rhythm: true,
+        transpose: true,
+        contour: false
+    });
+});
+/*
+document.getElementById('libre').addEventListener('click', function () {
+    applyPreset({
+        // OPTIONS VALUE
+        pitchDist: 2,
+        durationFactor: 2,
+        durationGap: 1,
+        alpha: 0,
+        // OPTIONS CHECK
+        pitch: false,
+        rhythm: false,
+        transpose: true,
+        contour: true
+    });
+});
+*/
+function applyPreset(preset) {
+    // VALUES
+    document.getElementById('pitch-dist-select').value = preset.pitchDist;
+    document.getElementById('duration-factor-select').value = preset.durationFactor;
+    document.getElementById('duration-gap-select').value = preset.durationGap;
+    document.getElementById('alpha-select').value = preset.alpha;
+    // CHECKBOX 
+    document.getElementById('pitch-cb').checked = preset.pitch;
+    document.getElementById('rhythm-cb').checked = preset.rhythm;
+    document.getElementById('transpose-cb').checked = preset.transpose;
+    //document.getElementById('contour-cb').checked = preset.contour;
+}
+
+/**
+ * FUNCTION BG COLOR / BUTTON SELECT
+ * 
+ */
 
 /**
  * 
@@ -1026,11 +1165,14 @@ function initTooltips() {
         'pitch-lb': "Permet de prendre en compte / ignorer la hauteur des notes.",
         'rhythm-lb': "Permet de prendre en compte / ignorer le rythme (la durée) des notes.",
         'transpose-lb': "Permet d'obtenir les partitions dont la hauteur des notes de la mélodie est décalée.",
-        'contour-lb': "Garde seulement le signe des intervalles entres les notes (haut, bas, égal).",
+        //'contour-lb': "Garde seulement le signe des intervalles entres les notes (haut, bas, égal).",
         'pitch-dist-lb': "Permet d'augmenter la tolérance sur la hauteur de note (en tons), ou sur les intervalles (si transposition est coché).",
         'duration-dist-lb': "Permet d'augmenter la tolérance sur la durée des notes (coefficient multiplicateur).",
         'sequencing-dist-lb': "Permet de sauter des notes (en durée : 1 pour pleine, 0.5 pour ronde, 0.25 pour croche, ...).",
-        'alpha-lb': "Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha."
+        'alpha-lb': "Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.",
+        'stricte': "Permet une recherche sans tolérances.",
+        'modereeMelo': "Permet la recherche avec une hauteur de note décalée mais ignore la rythmique.",
+        'modereeRythm': "Permet la recherche sans prendre en compte la hauteur des notes."
     };
 
     Object.keys(info_texts).forEach(id => {

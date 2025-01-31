@@ -31,6 +31,7 @@ SKRID Platform is an interface to a graph database designed to explore musical p
 └── README.md
 ```
 
+## The MacOS (Apple arch) setup is on bottom 
 
 ## Setup
 ### Setup repository
@@ -156,3 +157,12 @@ git add compilation_requete_fuzzy # add the modifications of the "file" (the sub
 git commit -m "Update fuzzy version"
 git push
 ```
+# MAC OS SETUP -> dependencies with python /!\ 3.10 /!\ import - requirements.txt 
+# TERMINAL COMMANDES :
+#
+# IF the activate file is not in venv/bin -> remove the venv and retry first step
+#
+# 1- python3.10 -m venv venv
+# 2- source venv/bin/activate (mac/linux) /// .\venv\Scripts\activate (winddows)
+# 3- install dependencies -> pip install -r requirements.txt
+#
