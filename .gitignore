@@ -1,6 +1,7 @@
 node_modules/
 docs/
 assets/data/
+venv/
 
 package-lock.json
 
