@@ -149,14 +149,14 @@ const qwerty_us_to_azerty = {
  * @param {number}  [duration_gap=0]            - the duration gap (fuzzy param) ;
  * @param {number}  [alpha=0]                   - (in [0 ; 1]) will remove every result whose score is below `alpha` (fuzzy param) ;
  * @param {boolean} [allow_transposition=false] - allow transposition (fuzzy param) ;
- * @param {boolean} [contour_match=false]       - match only contour (fuzzy param) ;
+ * @param {boolean} //[contour_match=false]       - match only contour (fuzzy param) ;
  *
  * @returns {promise} the fuzzy query corresponding to the parameters
  *
  * @example
  * createQuery().then(fuzzyQuery => sendQuery(fuzzyQuery));
  */
-async function createQuery(ignore_pitch=false, ignore_octave=false, ignore_rhythm=false, pitch_dist=0, duration_factor=1, duration_gap=0, alpha=0, allow_transposition=false, contour_match=false) {
+async function createQuery(ignore_pitch=false, ignore_octave=false, ignore_rhythm=false, pitch_dist=0, duration_factor=1, duration_gap=0, alpha=0, allow_transposition=false, /*contour_match=false*/) {
     //------Create the `notes` for the python script
     
     let notes = '[';
@@ -167,7 +167,7 @@ async function createQuery(ignore_pitch=false, ignore_octave=false, ignore_rhyth
             let note = melody[k].keys[note_idx];
 
             //---Add note class ('a', 'gs', ...)
-            if (ignore_pitch && !contour_match)
+            if (ignore_pitch /*&& !contour_match*/)
                 notes += '(None, ';
             else if (melody[k].noteType == 'r') // rest
                 notes += "('r', ";
@@ -178,7 +178,7 @@ async function createQuery(ignore_pitch=false, ignore_octave=false, ignore_rhyth
             }
 
             //---Add octave
-            if ((ignore_octave || melody[k].noteType == 'r') && !contour_match)
+            if ((ignore_octave || melody[k].noteType == 'r') /*&& !contour_match*/)
                 notes += 'None), ';
             else {
                 let octave = note.split('/')[1];
@@ -212,7 +212,7 @@ async function createQuery(ignore_pitch=false, ignore_octave=false, ignore_rhyth
         duration_gap: duration_gap,
         alpha: alpha,
         allow_transposition: allow_transposition,
-        contour_match: contour_match,
+        //contour_match: contour_match,
         collection: selectedCollection
     };
 
@@ -340,12 +340,12 @@ const searchButtonHandler = function() {
         return;
     }
 
-    if (!pitch_cb.checked && !rhythm_cb.checked && !contour_cb.checked) {
+    if (!pitch_cb.checked && !rhythm_cb.checked /*&& !contour_cb.checked*/) {
         alert('You have ignored all settings (pitch, rhythm and contour).\nPlease select at least one.\nIf you want to browse the scores, check the collection page.')
         return;
     }
 
-    if ((transposition_cb.checked || contour_cb.checked) && melody.length == 1) {
+    if ((transposition_cb.checked /*|| contour_cb.checked*/) && melody.length == 1) {
         alert('For transposition and contour search, at least two notes are needed (because it is based on interval between notes).');
         return;
     }
@@ -363,7 +363,7 @@ const searchButtonHandler = function() {
         duration_gap_select.value,
         alpha_select.value / 100,
         transposition_cb.checked,
-        contour_cb.checked
+        //contour_cb.checked
     ).then(
         fuzzyQuery => sendQuery(fuzzyQuery)
     );
@@ -541,33 +541,33 @@ const matchRhythmCbHandler = () => {
  * Called when "Autoriser les transposition" or "Correspondance du contour seulement" checkbox is clicked.
  * It set the other one as unchecked, and disable other options if needed.
  */
-const contourAndTranspositionHandler = (sender_id) => {
+/*const contourAndTranspositionHandler = (sender_id) => {
     const transpose_cb = document.getElementById('transpose-cb');
-    //const contour_cb = document.getElementById('contour-cb');
+    const contour_cb = document.getElementById('contour-cb');
     const pitch_cb = document.getElementById('pitch-cb');
     const pitch_dist_cb = document.getElementById('pitch-dist-select');
 
     // Uncheck the other checkbox
     // if (event.srcElement.id == 'transpose-cb' && transpose_cb.checked) {
-    if (sender_id == 'transpose-cb' && transpose_cb.checked) {
-        contour_cb.checked = false;
-    }
+    //if (sender_id == 'transpose-cb' && transpose_cb.checked) {
+    //    contour_cb.checked = false;
+    //}
     // if (event.srcElement.id == 'contour-cb' && contour_cb.checked) {
     //if (sender_id == 'contour-cb' && contour_cb.checked) {
     //    transpose_cb.checked = false;
     //}
 
     // If contour is checked, disable pitch param
-    if (contour_cb.checked) {
-        pitch_cb.disabled = true;
-        pitch_dist_cb.disabled = true;
-    }
-    else {
+    //if (contour_cb.checked) {
+    //    pitch_cb.disabled = true;
+    //    pitch_dist_cb.disabled = true;
+    //}
+    /*else {
         pitch_cb.disabled = false;
         matchPicthCbHandler();
         // pitch_dist_cb.disabled = false;
     }
-}
+}*/
 
 /**
  * Used to turn the info box on.
@@ -873,7 +873,7 @@ document.getElementById('stricte').addEventListener('click', function () {
         pitch: true,
         rhythm: true,
         transpose: false,
-        contour: false,
+        //contour: false,
         // OPTION SELECT BACKGROUND
 
     });
@@ -882,15 +882,15 @@ document.getElementById('stricte').addEventListener('click', function () {
 document.getElementById('modereeMelo').addEventListener('click', function () {
     applyPreset({
         // OPTIONS VALUE
-        pitchDist: 2,
-        durationFactor: 1.25,
+        pitchDist: 4,
+        durationFactor: 1.5,
         durationGap: 0,
         alpha: 0,
         // OPTIONS CHECK
         pitch: true,
-        rhythm: false,
+        rhythm: true,
         transpose: true,
-        contour: false
+        //contour: false
     });
 });
 
@@ -899,13 +899,13 @@ document.getElementById('modereeRythm').addEventListener('click', function () {
         // OPTIONS VALUE
         pitchDist: 0,
         durationFactor: 1.25,
-        durationGap: 0.5,
+        durationGap: 4,
         alpha: 0,
         // OPTIONS CHECK
-        pitch: false,
+        pitch: true,
         rhythm: true,
         transpose: true,
-        contour: false
+        //contour: false
     });
 });
 /*
@@ -1213,5 +1213,5 @@ function init() {
 
     matchPicthCbHandler(); // Disable options that should be
     matchRhythmCbHandler();
-    contourAndTranspositionHandler(null);
+    //contourAndTranspositionHandler(null);
 }
