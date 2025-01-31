@@ -332,7 +332,7 @@ const searchButtonHandler = function() {
     const duration_gap_select = document.getElementById('duration-gap-select');
     const alpha_select = document.getElementById('alpha-select');
     const transposition_cb = document.getElementById('transpose-cb');
-    const contour_cb = document.getElementById('contour-cb');
+    //const contour_cb = document.getElementById('contour-cb');
 
     // Check that melody is not empty
     if (melody.length == 0) {
@@ -543,7 +543,7 @@ const matchRhythmCbHandler = () => {
  */
 const contourAndTranspositionHandler = (sender_id) => {
     const transpose_cb = document.getElementById('transpose-cb');
-    const contour_cb = document.getElementById('contour-cb');
+    //const contour_cb = document.getElementById('contour-cb');
     const pitch_cb = document.getElementById('pitch-cb');
     const pitch_dist_cb = document.getElementById('pitch-dist-select');
 
@@ -553,9 +553,9 @@ const contourAndTranspositionHandler = (sender_id) => {
         contour_cb.checked = false;
     }
     // if (event.srcElement.id == 'contour-cb' && contour_cb.checked) {
-    if (sender_id == 'contour-cb' && contour_cb.checked) {
-        transpose_cb.checked = false;
-    }
+    //if (sender_id == 'contour-cb' && contour_cb.checked) {
+    //    transpose_cb.checked = false;
+    //}
 
     // If contour is checked, disable pitch param
     if (contour_cb.checked) {
@@ -840,7 +840,7 @@ function manageOptions() {
     const pitch_cb = document.getElementById('pitch-cb');
     const rhythm_cb = document.getElementById('rhythm-cb');
     const transpose_cb = document.getElementById('transpose-cb');
-    const contour_cb = document.getElementById('contour-cb');
+    //const contour_cb = document.getElementById('contour-cb');
 
     // Add an event listener for the clear-buttons to call the corresponding method
     clearAllButton.addEventListener('click', clear_all_pattern);
@@ -855,7 +855,7 @@ function manageOptions() {
     rhythm_cb.addEventListener('click', matchRhythmCbHandler );
 
     transpose_cb.addEventListener('click', () => contourAndTranspositionHandler('transpose-cb'));
-    contour_cb.addEventListener('click', () => contourAndTranspositionHandler('contour-cb'));
+   // contour_cb.addEventListener('click', () => contourAndTranspositionHandler('contour-cb'));
 }
 
 /**
@@ -908,7 +908,7 @@ document.getElementById('modereeRythm').addEventListener('click', function () {
         contour: false
     });
 });
-
+/*
 document.getElementById('libre').addEventListener('click', function () {
     applyPreset({
         // OPTIONS VALUE
@@ -923,7 +923,7 @@ document.getElementById('libre').addEventListener('click', function () {
         contour: true
     });
 });
-
+*/
 function applyPreset(preset) {
     // VALUES
     document.getElementById('pitch-dist-select').value = preset.pitchDist;
@@ -934,7 +934,7 @@ function applyPreset(preset) {
     document.getElementById('pitch-cb').checked = preset.pitch;
     document.getElementById('rhythm-cb').checked = preset.rhythm;
     document.getElementById('transpose-cb').checked = preset.transpose;
-    document.getElementById('contour-cb').checked = preset.contour;
+    //document.getElementById('contour-cb').checked = preset.contour;
 }
 
 /**
@@ -1165,7 +1165,7 @@ function initTooltips() {
         'pitch-lb': "Permet de prendre en compte / ignorer la hauteur des notes.",
         'rhythm-lb': "Permet de prendre en compte / ignorer le rythme (la durée) des notes.",
         'transpose-lb': "Permet d'obtenir les partitions dont la hauteur des notes de la mélodie est décalée.",
-        'contour-lb': "Garde seulement le signe des intervalles entres les notes (haut, bas, égal).",
+        //'contour-lb': "Garde seulement le signe des intervalles entres les notes (haut, bas, égal).",
         'pitch-dist-lb': "Permet d'augmenter la tolérance sur la hauteur de note (en tons), ou sur les intervalles (si transposition est coché).",
         'duration-dist-lb': "Permet d'augmenter la tolérance sur la durée des notes (coefficient multiplicateur).",
         'sequencing-dist-lb': "Permet de sauter des notes (en durée : 1 pour pleine, 0.5 pour ronde, 0.25 pour croche, ...).",
