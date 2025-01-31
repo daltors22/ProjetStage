@@ -445,6 +445,7 @@ app.post('/compileFuzzy', (req, res) => {
  * @constant /formulateQuery
  */
 app.post('/formulateQuery', (req, res) => {
+    console.log(req.body);
     // Get the params
     const notes = req.body.notes;
     let pitch_distance = req.body.pitch_distance;
