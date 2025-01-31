@@ -873,7 +873,9 @@ document.getElementById('stricte').addEventListener('click', function () {
         pitch: true,
         rhythm: true,
         transpose: false,
-        contour: false
+        contour: false,
+        // OPTION SELECT BACKGROUND
+
     });
 });
 
@@ -934,6 +936,11 @@ function applyPreset(preset) {
     document.getElementById('transpose-cb').checked = preset.transpose;
     document.getElementById('contour-cb').checked = preset.contour;
 }
+
+/**
+ * FUNCTION BG COLOR / BUTTON SELECT
+ * 
+ */
 
 /**
  * 
@@ -1163,8 +1170,9 @@ function initTooltips() {
         'duration-dist-lb': "Permet d'augmenter la tolérance sur la durée des notes (coefficient multiplicateur).",
         'sequencing-dist-lb': "Permet de sauter des notes (en durée : 1 pour pleine, 0.5 pour ronde, 0.25 pour croche, ...).",
         'alpha-lb': "Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.",
-        'stricte': "Permet une recherche sans tolérances",
-        'modereeMelo': "Permet la recherche avec une hauteur de note décalée mais ignore la rythmique"
+        'stricte': "Permet une recherche sans tolérances.",
+        'modereeMelo': "Permet la recherche avec une hauteur de note décalée mais ignore la rythmique.",
+        'modereeRythm': "Permet la recherche sans prendre en compte la hauteur des notes."
     };
 
     Object.keys(info_texts).forEach(id => {
