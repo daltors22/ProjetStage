@@ -859,6 +859,28 @@ function manageOptions() {
 }
 
 /**
+ * Toggle color button preset
+ * 
+ */
+
+// Suivi de l'état du bouton actif
+let activeButton = null;
+
+// Fonction pour gérer le changement de couleur du bouton actif
+function toggleButtonState(buttonId) {
+    const button = document.getElementById(buttonId);
+
+    // Si un bouton est déjà actif, réinitialiser sa couleur
+    if (activeButton && activeButton !== buttonId) {
+        document.getElementById(activeButton).style.backgroundColor = '#7ab6e0'; // Couleur par défaut
+    }
+
+    // Modifier la couleur du bouton actuel
+    button.style.backgroundColor = '#006485'; // Nouvelle couleur de fond
+    activeButton = buttonId; // Mettre à jour l'état du bouton actif
+}
+
+/**
  * Here is the PRESET BUTTON LOGIC 
  * 1 -> Stricte / 2 -> Modérée / 3 -> Libre
  */
@@ -872,11 +894,12 @@ document.getElementById('stricte').addEventListener('click', function () {
         // OPTIONS CHECK
         pitch: true,
         rhythm: true,
-        transpose: false,
-        //contour: false,
-        // OPTION SELECT BACKGROUND
-
+        transpose: false
+        //contour: false
     });
+
+    // OPTION SELECT BACKGROUND
+    toggleButtonState('stricte');
 });
 
 document.getElementById('modereeMelo').addEventListener('click', function () {
@@ -892,6 +915,9 @@ document.getElementById('modereeMelo').addEventListener('click', function () {
         transpose: true,
         //contour: false
     });
+    
+    // OPTION SELECT BACKGROUND
+    toggleButtonState('modereeMelo');
 });
 
 document.getElementById('modereeRythm').addEventListener('click', function () {
@@ -907,6 +933,9 @@ document.getElementById('modereeRythm').addEventListener('click', function () {
         transpose: true,
         //contour: false
     });
+
+    // OPTION SELECT BACKGROUND
+    toggleButtonState('modereeRythm');
 });
 /*
 document.getElementById('libre').addEventListener('click', function () {
@@ -924,6 +953,7 @@ document.getElementById('libre').addEventListener('click', function () {
     });
 });
 */
+
 function applyPreset(preset) {
     // VALUES
     document.getElementById('pitch-dist-select').value = preset.pitchDist;
