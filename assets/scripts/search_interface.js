@@ -1201,8 +1201,8 @@ function initTooltips() {
         'sequencing-dist-lb': "Permet de sauter des notes (en durée : 1 pour pleine, 0.5 pour ronde, 0.25 pour croche, ...).",
         'alpha-lb': "Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.",
         'stricte': "Permet une recherche sans tolérances.",
-        'modereeMelo': "Permet la recherche avec une hauteur de note décalée mais ignore la rythmique.",
-        'modereeRythm': "Permet la recherche sans prendre en compte la hauteur des notes."
+        'modereeMelo': "Permet la recherche avec une tolérance sur la hauteur des notes.",
+        'modereeRythm': "Permet la recherche avec tout écarts de durée."
     };
 
     Object.keys(info_texts).forEach(id => {
