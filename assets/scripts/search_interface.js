@@ -833,7 +833,7 @@ function keyListener(event) {
  * Also ensure that only one radio button is selected.
  */
 function manageOptions() {
-    const searchButton = document.getElementById("send-button"); // Search button
+    const searchButton = document.querySelectorAll(".send-button"); // Search button // original -> document.getElementById("send-button")
     const clearAllButton = document.getElementById("clear_all");
     const clearLastNoteButton = document.getElementById("clear_last_note");
     const playBt = document.getElementById('play_melody');
@@ -848,7 +848,10 @@ function manageOptions() {
     playBt.addEventListener('click', playMelodyBtHandler);
 
     // Add an event listener for the 'search' button
-    searchButton.addEventListener('click', searchButtonHandler);
+    //searchButton.addEventListener('click', searchButtonHandler); -> is original for 1 button use
+    searchButton.forEach(button => {
+        button.addEventListener('click', searchButtonHandler);
+    });
 
     // Add event listener to 'Hauteur des notes' checkbox
     pitch_cb.addEventListener('click', matchPicthCbHandler);
