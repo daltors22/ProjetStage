@@ -69,6 +69,13 @@
           <div class="column volume-slider">
             <span>Volume</span><input type="range" min="0" max="1" value="0.5" step="any">
           </div>
+          <div class='octave-modif'>
+            <div class='octave-modif-bt-div'>
+              <button class='btn btn-outline-secondary text-white octave-modif-bt' data-key='<' id='octave-minus'><span>Octave - (c)</span></button>
+              <button class='btn btn-outline-secondary text-white octave-modif-bt' data-key='>' id='octave-plus'><span>Octave + (v)</span></button>
+            </div>
+            <label id='octave-lb' class='white-label'>4</label>
+          </div>
           <div class="column keys-checkbox">
             <span>Touches</span><input type="checkbox" checked>
           </div>
@@ -126,14 +133,6 @@
             <button class='rhythm-modif-bt' data-key='16' id='16th-bt'><img src='public/notes_pics/16.png' height=50px alt='16-th'></button>
             <button class='rhythm-modif-bt' data-key='32d' id='32th-dotted-bt'><img src='public/notes_pics/32d.png' height=50px alt='Dotted 32-th'></button>
             <button class='rhythm-modif-bt' data-key='32' id='32th-bt'><img src='public/notes_pics/32.png' height=50px alt='32-th'></button>
-          </div>
-
-          <div class='octave-modif'>
-            <div class='octave-modif-bt-div'>
-              <button class='octave-modif-bt' data-key='<' id='octave-minus'><span>Octave - (c)</span></button>
-              <button class='octave-modif-bt' data-key='>' id='octave-plus'><span>Octave + (v)</span></button>
-            </div>
-            <label id='octave-lb' class='white-label'>4</label>
           </div>
 
           <!-- <div class='qwerty-switch'>

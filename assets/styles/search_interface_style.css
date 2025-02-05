@@ -206,7 +206,7 @@ header input {
 }
 
 .octave-modif-bt-div {
-    display: grid;
+    display: flex;
     margin-right: 10px;
     gap: 10px;
 }
