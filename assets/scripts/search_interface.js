@@ -927,8 +927,8 @@ document.getElementById('modereeRythm').addEventListener('click', function () {
     applyPreset({
         // OPTIONS VALUE
         pitchDist: 0,
-        durationFactor: 1.25,
-        durationGap: 4,
+        durationFactor: 4,
+        durationGap: 0.5,
         alpha: 0,
         // OPTIONS CHECK
         pitch: true,
