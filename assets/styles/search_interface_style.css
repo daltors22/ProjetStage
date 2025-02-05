@@ -199,10 +199,23 @@ header input {
    border-radius: 5px;
    width: 40px;
    background-color: white;
+   position: relative;
 }
 
 .rhythm-modif-bt img {
   border-radius: 3px;
+}
+
+/* Personnaliser la croix */
+.cross {
+  font-size: 20px;
+  color: red;
+  z-index: 10;  /* Assure que la croix est au-dessus de l'image */
+  background: rgba(255, 255, 255, 0.8); /* Optionnel : fond blanc légèrement transparent pour plus de visibilité */
+  border-radius: 50%;  /* Arrondir la croix pour un meilleur look */
+  padding: 2px; /* Petit espace autour de la croix */
+  width: 100%;
+  height: 100%;
 }
 
 .octave-modif-bt-div {

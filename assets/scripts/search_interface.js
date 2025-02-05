@@ -1248,3 +1248,35 @@ function init() {
     matchRhythmCbHandler();
     //contourAndTranspositionHandler(null);
 }
+
+/**
+ * Cross button logic
+ */
+// Associer chaque option à son bouton correspondant
+const optionToButtonMap = {
+    option1: '8th-bt',       // Ignorer les croches
+    option2: 'whole-bt',     // Ignorer les rondes
+    option3: 'quarter-bt',   // Ignorer les noirs
+    option4: 'half-bt'       // Ignorer les blanches
+  };
+  
+  // Fonction pour masquer toutes les croix
+  function hideAllCrosses() {
+    document.querySelectorAll('.cross').forEach(cross => {
+      cross.classList.add('d-none');  // Cache la croix
+    });
+  }
+  
+  // Ajouter des écouteurs d'événements pour chaque option
+  Object.keys(optionToButtonMap).forEach(optionId => {
+    document.getElementById(optionId).addEventListener('click', function() {
+      hideAllCrosses();  // Masquer toutes les croix avant d'en afficher une
+  
+      const buttonId = optionToButtonMap[optionId];  // Trouver l'ID du bouton lié
+      const button = document.getElementById(buttonId);
+      const cross = button.querySelector('.cross');
+  
+      cross.classList.remove('d-none');  // Afficher la croix correspondante
+    });
+  });
+  
