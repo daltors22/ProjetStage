@@ -61,12 +61,11 @@
         <button type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;", id='clear_all'>Supprimer tout</button>
         <button type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;", id='clear_last_note'>Supprimer la dernière note</button>
         <button type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;", id="play_melody">Jouer la mélodie</button>
-        <button type="button" class="btn  text-white" style="background-color: #006485;", id="send-button">Recherche</button>
+        <button type="button" class="btn text-white send-button" style="background-color: #006485;">Recherche</button>
       </div>
       <br>
       <div class="wrapper">
         <header>
-          <h2>Utilisez le piano pour d&eacute;finir le motif musical</h2>
           <div class="column volume-slider">
             <span>Volume</span><input type="range" min="0" max="1" value="0.5" step="any">
           </div>
@@ -159,23 +158,23 @@
             <% } %>
           </select>
         </div>
-        
+        <hr>
         <!-- START TEST PRESET BUTTON -->
-        <div class="flex-column" style=" display: flex; gap:40px;">
+        <div class="flex-column" style=" display: flex; gap:20px;">
         <h4 class="text-center">Sélectionnez la correspondance</h4>
           <div class="flex-row" style=" display: flex; gap:40px;">
             <button id="stricte" type="button" class="btn text-white tooltip-lb" style="background-color: #7ab6e0;">Recherche exacte</button>
-            <button id="modereeMelo" type="button" class="btn text-white" style="background-color: #7ab6e0;">Recherche sur la mélodie</button>
-            <button id="modereeRythm" type="button" class="btn text-white" style="background-color: #7ab6e0;">Recherche sur la rythmique</button>
+            <button id="modereeMelo" type="button" class="btn text-white" style="background-color: #7ab6e0;">Recherche mélodique <br> approchée</button>
+            <button id="modereeRythm" type="button" class="btn text-white" style="background-color: #7ab6e0;">Recherche rythmique <br> approchée</button>
             <!--<button id="libre" type="button" class="btn text-white" style="background-color: #7ab6e0;">Recherche exploratoire</button>-->
           </div>
-          <button id="toggleButton2" class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample" data-button="options2">
-            Options avancées
-          </button>
         </div>
+        <button id="toggleButton2" class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample" data-button="options2">
+          Options avancées
+        </button>
 
         <div style="min-height: 120px;">
-          <div class="collapse collapse-horizontal" id="collapseWidthExample">
+          <div class="collapse collapse-vertical" id="collapseWidthExample">
             <div class="card card-body" style="width: 300px;">
               <div class='general-options'>
                 <label class='tooltip-lb' id='pitch-lb'>
@@ -235,6 +234,10 @@
                 <button>croche</button>
               </div>
             </div>-->
+            <hr>
+        <div class="clear_buttons">
+          <button type="button" class="btn  text-white send-button" style="background-color: #006485;", id="send-button">Recherche</button>
+        </div>
         </div>
       </div>
     </div>

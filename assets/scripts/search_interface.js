@@ -833,7 +833,7 @@ function keyListener(event) {
  * Also ensure that only one radio button is selected.
  */
 function manageOptions() {
-    const searchButton = document.getElementById("send-button"); // Search button
+    const searchButton = document.querySelectorAll(".send-button"); // Search button // original -> document.getElementById("send-button")
     const clearAllButton = document.getElementById("clear_all");
     const clearLastNoteButton = document.getElementById("clear_last_note");
     const playBt = document.getElementById('play_melody');
@@ -848,7 +848,10 @@ function manageOptions() {
     playBt.addEventListener('click', playMelodyBtHandler);
 
     // Add an event listener for the 'search' button
-    searchButton.addEventListener('click', searchButtonHandler);
+    //searchButton.addEventListener('click', searchButtonHandler); -> is original for 1 button use
+    searchButton.forEach(button => {
+        button.addEventListener('click', searchButtonHandler);
+    });
 
     // Add event listener to 'Hauteur des notes' checkbox
     pitch_cb.addEventListener('click', matchPicthCbHandler);
@@ -856,6 +859,28 @@ function manageOptions() {
 
     transpose_cb.addEventListener('click', () => contourAndTranspositionHandler('transpose-cb'));
    // contour_cb.addEventListener('click', () => contourAndTranspositionHandler('contour-cb'));
+}
+
+/**
+ * Toggle color button preset
+ * 
+ */
+
+// Suivi de l'état du bouton actif
+let activeButton = null;
+
+// Fonction pour gérer le changement de couleur du bouton actif
+function toggleButtonState(buttonId) {
+    const button = document.getElementById(buttonId);
+
+    // Si un bouton est déjà actif, réinitialiser sa couleur
+    if (activeButton && activeButton !== buttonId) {
+        document.getElementById(activeButton).style.backgroundColor = '#7ab6e0'; // Couleur par défaut
+    }
+
+    // Modifier la couleur du bouton actuel
+    button.style.backgroundColor = '#006485'; // Nouvelle couleur de fond
+    activeButton = buttonId; // Mettre à jour l'état du bouton actif
 }
 
 /**
@@ -872,11 +897,12 @@ document.getElementById('stricte').addEventListener('click', function () {
         // OPTIONS CHECK
         pitch: true,
         rhythm: true,
-        transpose: false,
-        //contour: false,
-        // OPTION SELECT BACKGROUND
-
+        transpose: false
+        //contour: false
     });
+
+    // OPTION SELECT BACKGROUND
+    toggleButtonState('stricte');
 });
 
 document.getElementById('modereeMelo').addEventListener('click', function () {
@@ -892,6 +918,9 @@ document.getElementById('modereeMelo').addEventListener('click', function () {
         transpose: true,
         //contour: false
     });
+    
+    // OPTION SELECT BACKGROUND
+    toggleButtonState('modereeMelo');
 });
 
 document.getElementById('modereeRythm').addEventListener('click', function () {
@@ -907,6 +936,9 @@ document.getElementById('modereeRythm').addEventListener('click', function () {
         transpose: true,
         //contour: false
     });
+
+    // OPTION SELECT BACKGROUND
+    toggleButtonState('modereeRythm');
 });
 /*
 document.getElementById('libre').addEventListener('click', function () {
@@ -924,6 +956,7 @@ document.getElementById('libre').addEventListener('click', function () {
     });
 });
 */
+
 function applyPreset(preset) {
     // VALUES
     document.getElementById('pitch-dist-select').value = preset.pitchDist;
@@ -1171,8 +1204,8 @@ function initTooltips() {
         'sequencing-dist-lb': "Permet de sauter des notes (en durée : 1 pour pleine, 0.5 pour ronde, 0.25 pour croche, ...).",
         'alpha-lb': "Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.",
         'stricte': "Permet une recherche sans tolérances.",
-        'modereeMelo': "Permet la recherche avec une hauteur de note décalée mais ignore la rythmique.",
-        'modereeRythm': "Permet la recherche sans prendre en compte la hauteur des notes."
+        'modereeMelo': "Permet la recherche avec une tolérance sur la hauteur des notes.",
+        'modereeRythm': "Permet la recherche avec tout écarts de durée."
     };
 
     Object.keys(info_texts).forEach(id => {
