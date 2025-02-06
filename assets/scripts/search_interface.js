@@ -1280,3 +1280,15 @@ const optionToButtonMap = {
     });
   });
   
+/**
+ * MESSAGE TOAST BUTTON PRESET
+ */
+const toastTrigger = document.getElementById('stricte');
+const toastLiveExample = document.getElementById('liveToast');
+
+if (toastTrigger) {
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample, { delay: 15000 }); // 5 secondes
+    toastTrigger.addEventListener('click', () => {
+        toastBootstrap.show();
+    });
+}

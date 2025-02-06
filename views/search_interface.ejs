@@ -245,7 +245,20 @@
         </div>
       </div>
     </div>
-
+    <!-- TEST MESSAGE TOAST -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="liveToast" class="toast align-items-center text-bg-secondary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Recherche exacte</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          Vous effectuez une recheche sans tolérances ! 
+          Vous pouvez sélectionner un autre <em>preset</em> pour augmenter vos résultats.
+        </div>
+      </div>
+    </div>
+    <!---->
     <div class="container_2">
         <%- include('./partials/paginated_results.ejs'); %>
     </div>
