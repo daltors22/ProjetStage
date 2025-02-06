@@ -116,28 +116,17 @@
           </span></button>
 
           <div class='rhythm-modif'>
-            <button class='rhythm-modif-bt' data-key='w' id='whole-bt'><span class="cross position-absolute top-0 end-0 d-none">&#10005;</span><img src='public/notes_pics/1.png' height=50px alt='Whole'></button>
-            <button class='rhythm-modif-bt' data-key='hd' id='half-dotted-bt'><span class="cross position-absolute top-0 end-0 d-none">&#10005;</span><img src='public/notes_pics/2d.png' height=50px alt='Dotted half'></button>
-            <button class='rhythm-modif-bt' data-key='h' id='half-bt'><span class="cross position-absolute top-0 end-0 d-none">&#10005;</span><img src='public/notes_pics/2.png' height=50px alt='Half'></button>
-            <button class='rhythm-modif-bt' data-key='qd' id='quarter-dotted-bt'><span class="cross position-absolute top-0 end-0 d-none">&#10005;</span><img src='public/notes_pics/4d.png' height=50px alt='Dotted quarter'></button>
-            <button class='rhythm-modif-bt' data-key='q' id='quarter-bt'><span class="cross position-absolute top-0 end-0 d-none">&#10005;</span><img src='public/notes_pics/4.png' height=50px alt='Quarter'></button>
-            <button class='rhythm-modif-bt' data-key='8d' id='8th-dotted-bt'><span class="cross position-absolute top-0 end-0 d-none">&#10005;</span><img src='public/notes_pics/8d.png' height=50px alt='Dotted 8-th'></button>
-            <button class='rhythm-modif-bt' data-key='8' id='8th-bt'><span class="cross position-absolute top-0 end-0 d-none">&#10005;</span><img src='public/notes_pics/8.png' height=50px alt='8-th'></button>
+            <button class='rhythm-modif-bt' data-key='w' id='whole-bt'><img src='public/notes_pics/1.png' height=50px alt='Whole'></button>
+            <button class='rhythm-modif-bt' data-key='hd' id='half-dotted-bt'><img src='public/notes_pics/2d.png' height=50px alt='Dotted half'></button>
+            <button class='rhythm-modif-bt' data-key='h' id='half-bt'><img src='public/notes_pics/2.png' height=50px alt='Half'></button>
+            <button class='rhythm-modif-bt' data-key='qd' id='quarter-dotted-bt'><img src='public/notes_pics/4d.png' height=50px alt='Dotted quarter'></button>
+            <button class='rhythm-modif-bt' data-key='q' id='quarter-bt'><img src='public/notes_pics/4.png' height=50px alt='Quarter'></button>
+            <button class='rhythm-modif-bt' data-key='8d' id='8th-dotted-bt'><img src='public/notes_pics/8d.png' height=50px alt='Dotted 8-th'></button>
+            <button class='rhythm-modif-bt' data-key='8' id='8th-bt'><img src='public/notes_pics/8.png' height=50px alt='8-th'></button>
             <button class='rhythm-modif-bt' data-key='16d' id='16th-dotted-bt'><img src='public/notes_pics/16d.png' height=50px alt='Dotted 16-th'></button>
-            <button class='rhythm-modif-bt' data-key='16' id='16th-bt'><span class="cross position-absolute top-0 end-0 d-none">&#10005;</span><img src='public/notes_pics/16.png' height=50px alt='16-th'></button>
-            <button class='rhythm-modif-bt' data-key='32d' id='32th-dotted-bt'><span class="cross position-absolute top-0 end-0 d-none">&#10005;</span><img src='public/notes_pics/32d.png' height=50px alt='Dotted 32-th'></button>
-            <button class='rhythm-modif-bt' data-key='32' id='32th-bt'><span class="cross position-absolute top-0 end-0 d-none">&#10005;</span><img src='public/notes_pics/32.png' height=50px alt='32-th'></button>
-            <div class="dropdown" style="cursor: pointer;">
-              <button class="btn btn-outline-danger dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                Exclusion rythmique
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" id="option1">Sauter les croches</a></li>
-                <li><a class="dropdown-item" id="option2">Sauter les rondes</a></li>
-                <li><a class="dropdown-item" id="option3">Sauter les noirs</a></li>
-                <li><a class="dropdown-item" id="option4">Sauter les blanches</a></li>
-              </ul>
-            </div>
+            <button class='rhythm-modif-bt' data-key='16' id='16th-bt'><img src='public/notes_pics/16.png' height=50px alt='16-th'></button>
+            <button class='rhythm-modif-bt' data-key='32d' id='32th-dotted-bt'><img src='public/notes_pics/32d.png' height=50px alt='Dotted 32-th'></button>
+            <button class='rhythm-modif-bt' data-key='32' id='32th-bt'><img src='public/notes_pics/32.png' height=50px alt='32-th'></button>
           </div>
 
           <!-- <div class='qwerty-switch'>
@@ -148,11 +137,7 @@
           </div> -->
         </div>
       </div>
-
       <br>
-
-
-
       <div class="flex-column" style="display: flex; justify-content: space-between; gap:20px;">
         <div class="collections-options">
           <label for="collections">Collection dans lesquelles rechercher : </label><br>
@@ -227,6 +212,10 @@
                   %
                   <!-- <span class='tooltiptext'>Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.</span> -->
                 </label>
+                <hr>
+                <div class="clear_buttons">
+                  <button type="button" class="btn  text-white send-button" style="background-color: #006485;", id="send-button">Recherche</button>
+                </div>
               </div>
             </div>
           </div>
@@ -238,23 +227,38 @@
                 <button>croche</button>
               </div>
             </div>-->
-            <hr>
-        <div class="clear_buttons">
-          <button type="button" class="btn  text-white send-button" style="background-color: #006485;", id="send-button">Recherche</button>
-        </div>
         </div>
       </div>
     </div>
     <!-- TEST MESSAGE TOAST -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
-      <div id="liveToast" class="toast align-items-center text-bg-secondary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div id="liveToast1" class="toast align-items-center text-bg-secondary border-0" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
           <strong class="me-auto">Recherche exacte</strong>
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
-          Vous effectuez une recheche sans tolérances ! 
+          Vous effectuez une recherche sans tolérances ! 
+          <br>
           Vous pouvez sélectionner un autre <em>preset</em> pour augmenter vos résultats.
+        </div>
+      </div>
+      <div id="liveToast2" class="toast align-items-center text-bg-secondary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Recherche approchée</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          Vous effectuez une recherche approchée, avec une tolérance élevée sur la hauteur des notes et une tolérance légère sur leur durée.
+        </div>
+      </div>
+      <div id="liveToast3" class="toast align-items-center text-bg-secondary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Recherche approximative</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          Vous effectuez une recherche approximative où le facteur de durée est modéré, et certaines figures rythmiques peuvent être incluses dans votre motif de recherche.
         </div>
       </div>
     </div>

@@ -903,6 +903,8 @@ document.getElementById('stricte').addEventListener('click', function () {
 
     // OPTION SELECT BACKGROUND
     toggleButtonState('stricte');
+    // Start search
+    searchButtonHandler();
 });
 
 document.getElementById('modereeMelo').addEventListener('click', function () {
@@ -921,14 +923,16 @@ document.getElementById('modereeMelo').addEventListener('click', function () {
     
     // OPTION SELECT BACKGROUND
     toggleButtonState('modereeMelo');
+    // Start search
+    searchButtonHandler();
 });
 
 document.getElementById('modereeRythm').addEventListener('click', function () {
     applyPreset({
         // OPTIONS VALUE
         pitchDist: 1,
-        durationFactor: 2,
-        durationGap: 0.25,
+        durationFactor: 4,
+        durationGap: 0.0625,
         alpha: 0,
         // OPTIONS CHECK
         pitch: true,
@@ -939,6 +943,8 @@ document.getElementById('modereeRythm').addEventListener('click', function () {
 
     // OPTION SELECT BACKGROUND
     toggleButtonState('modereeRythm');
+    // Start search
+    searchButtonHandler();
 });
 /*
 document.getElementById('libre').addEventListener('click', function () {
@@ -1203,9 +1209,9 @@ function initTooltips() {
         'duration-dist-lb': "Permet d'augmenter la tolérance sur la durée des notes (coefficient multiplicateur).",
         'sequencing-dist-lb': "Permet de sauter des notes (en durée : 1 pour pleine, 0.5 pour ronde, 0.25 pour croche, ...).",
         'alpha-lb': "Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.",
-        'stricte': "Permet une recherche sans tolérances.",
-        'modereeMelo': "Permet la recherche avec une tolérance sur la hauteur des notes.",
-        'modereeRythm': "Permet une recherche plus large avec des sauts de figures de notes."
+        //'stricte': "Permet une recherche sans tolérances.",
+        //'modereeMelo': "Permet la recherche avec une tolérance sur la hauteur des notes.",
+        //'modereeRythm': "Permet une recherche plus large avec des sauts de figures de notes."
     };
 
     Object.keys(info_texts).forEach(id => {
@@ -1248,47 +1254,74 @@ function init() {
     matchRhythmCbHandler();
     //contourAndTranspositionHandler(null);
 }
-
-/**
- * Cross button logic
- */
-// Associer chaque option à son bouton correspondant
-const optionToButtonMap = {
-    option1: '8th-bt',       // Ignorer les croches
-    option2: 'whole-bt',     // Ignorer les rondes
-    option3: 'quarter-bt',   // Ignorer les noirs
-    option4: 'half-bt'       // Ignorer les blanches
-  };
-  
-  // Fonction pour masquer toutes les croix
-  function hideAllCrosses() {
-    document.querySelectorAll('.cross').forEach(cross => {
-      cross.classList.add('d-none');  // Cache la croix
-    });
-  }
-  
-  // Ajouter des écouteurs d'événements pour chaque option
-  Object.keys(optionToButtonMap).forEach(optionId => {
-    document.getElementById(optionId).addEventListener('click', function() {
-      hideAllCrosses();  // Masquer toutes les croix avant d'en afficher une
-  
-      const buttonId = optionToButtonMap[optionId];  // Trouver l'ID du bouton lié
-      const button = document.getElementById(buttonId);
-      const cross = button.querySelector('.cross');
-  
-      cross.classList.remove('d-none');  // Afficher la croix correspondante
-    });
-  });
   
 /**
  * MESSAGE TOAST BUTTON PRESET
  */
-const toastTrigger = document.getElementById('stricte');
-const toastLiveExample = document.getElementById('liveToast');
+const toastTrigger1 = document.getElementById('stricte');
+const toastTrigger2 = document.getElementById('modereeMelo');
+const toastTrigger3 = document.getElementById('modereeRythm');
+const toastLiveExample1 = document.getElementById('liveToast1');
+const toastLiveExample2 = document.getElementById('liveToast2');
+const toastLiveExample3 = document.getElementById('liveToast3');
 
-if (toastTrigger) {
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample, { delay: 15000 }); // 5 secondes
-    toastTrigger.addEventListener('click', () => {
-        toastBootstrap.show();
+// Show function 1
+if (toastTrigger1) {
+    const toastBootstrap1 = bootstrap.Toast.getOrCreateInstance(toastLiveExample1, { delay: 15000 }); // 5 secondes
+    toastTrigger1.addEventListener('click', () => {
+        toastBootstrap1.show();
+
+        // Hide function 2
+        if (toastLiveExample2) {
+            const toastBootstrap2 = bootstrap.Toast.getOrCreateInstance(toastLiveExample2);
+            toastBootstrap2.hide();
+        }
+
+        // Hide function 3
+        if (toastLiveExample3) {
+            const toastBootstrap3 = bootstrap.Toast.getOrCreateInstance(toastLiveExample3);
+            toastBootstrap3.hide();
+        }
+    });
+}
+
+// Show function 2
+if (toastTrigger2) {
+    const toastBootstrap2 = bootstrap.Toast.getOrCreateInstance(toastLiveExample2, { delay: 15000 }); // 5 secondes
+    toastTrigger2.addEventListener('click', () => {
+        toastBootstrap2.show();
+
+        // Hide function 1
+        if (toastLiveExample1) {
+            const toastBootstrap1 = bootstrap.Toast.getOrCreateInstance(toastLiveExample1);
+            toastBootstrap1.hide();
+        }
+
+        // Hide function 3
+        if (toastLiveExample3) {
+            const toastBootstrap3 = bootstrap.Toast.getOrCreateInstance(toastLiveExample3);
+            toastBootstrap3.hide();
+        }
+    });
+
+}
+
+// Show function 3
+if (toastTrigger3) {
+    const toastBootstrap3 = bootstrap.Toast.getOrCreateInstance(toastLiveExample3, { delay: 15000 }); // 5 secondes
+    toastTrigger3.addEventListener('click', () => {
+        toastBootstrap3.show();
+
+        // Hide function 1
+        if (toastLiveExample1) {
+            const toastBootstrap1 = bootstrap.Toast.getOrCreateInstance(toastLiveExample1);
+            toastBootstrap1.hide();
+        }
+
+        // Hide function 2
+        if (toastLiveExample2) {
+            const toastBootstrap2 = bootstrap.Toast.getOrCreateInstance(toastLiveExample2);
+            toastBootstrap2.hide();
+        }
     });
 }
