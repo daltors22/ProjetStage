@@ -388,6 +388,12 @@ header input {
     position: absolute;
 }
 
+/* HOVER PRESET BUTTON */
+
+#stricte:hover, #modereeMelo:hover, #modereeRythm:hover {
+    border: 1px solid rgb(15, 15, 143);
+}
+
 @media screen and (max-width: 815px) {
   .wrapper {
     padding: 25px;

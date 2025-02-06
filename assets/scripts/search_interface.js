@@ -908,7 +908,7 @@ document.getElementById('stricte').addEventListener('click', function () {
 document.getElementById('modereeMelo').addEventListener('click', function () {
     applyPreset({
         // OPTIONS VALUE
-        pitchDist: 4,
+        pitchDist: 5,
         durationFactor: 1.5,
         durationGap: 0,
         alpha: 0,
@@ -926,9 +926,9 @@ document.getElementById('modereeMelo').addEventListener('click', function () {
 document.getElementById('modereeRythm').addEventListener('click', function () {
     applyPreset({
         // OPTIONS VALUE
-        pitchDist: 0,
-        durationFactor: 4,
-        durationGap: 0.5,
+        pitchDist: 1,
+        durationFactor: 2,
+        durationGap: 0.25,
         alpha: 0,
         // OPTIONS CHECK
         pitch: true,
@@ -1205,7 +1205,7 @@ function initTooltips() {
         'alpha-lb': "Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.",
         'stricte': "Permet une recherche sans tolérances.",
         'modereeMelo': "Permet la recherche avec une tolérance sur la hauteur des notes.",
-        'modereeRythm': "Permet la recherche avec tout écarts de durée."
+        'modereeRythm': "Permet une recherche plus large avec des sauts de figures de notes."
     };
 
     Object.keys(info_texts).forEach(id => {
