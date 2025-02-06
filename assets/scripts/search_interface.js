@@ -977,11 +977,6 @@ function applyPreset(preset) {
 }
 
 /**
- * FUNCTION BG COLOR / BUTTON SELECT
- * 
- */
-
-/**
  * 
  * @param {*} blackKey 
  * @returns the next white key
@@ -1256,7 +1251,7 @@ function init() {
 }
   
 /**
- * MESSAGE TOAST BUTTON PRESET
+ * MESSAGE TOAST BUTTON PRESET --------- PENSER A AJOUTER LA LOGIQUE TRANSPOSITION SINON MESSAGE
  */
 const toastTrigger1 = document.getElementById('stricte');
 const toastTrigger2 = document.getElementById('modereeMelo');
@@ -1271,16 +1266,22 @@ if (toastTrigger1) {
     toastTrigger1.addEventListener('click', () => {
         toastBootstrap1.show();
 
-        // Hide function 2
-        if (toastLiveExample2) {
-            const toastBootstrap2 = bootstrap.Toast.getOrCreateInstance(toastLiveExample2);
-            toastBootstrap2.hide();
-        }
+        if (melody.length === 0) {
+            toastBootstrap1.hide();  // Si les entrées sont incorrectes, cache le toast
+        } else {
+            toastBootstrap1.show();  // Si tout est ok, affiche le toast
 
-        // Hide function 3
-        if (toastLiveExample3) {
-            const toastBootstrap3 = bootstrap.Toast.getOrCreateInstance(toastLiveExample3);
-            toastBootstrap3.hide();
+            // Hide function 2
+            if (toastLiveExample2) {
+                const toastBootstrap2 = bootstrap.Toast.getOrCreateInstance(toastLiveExample2);
+                toastBootstrap2.hide();
+            }
+
+            // Hide function 3
+            if (toastLiveExample3) {
+                const toastBootstrap3 = bootstrap.Toast.getOrCreateInstance(toastLiveExample3);
+                toastBootstrap3.hide();
+            }
         }
     });
 }
@@ -1291,16 +1292,22 @@ if (toastTrigger2) {
     toastTrigger2.addEventListener('click', () => {
         toastBootstrap2.show();
 
-        // Hide function 1
-        if (toastLiveExample1) {
-            const toastBootstrap1 = bootstrap.Toast.getOrCreateInstance(toastLiveExample1);
-            toastBootstrap1.hide();
-        }
+        if (melody.length === 0) {
+            toastBootstrap2.hide();  // Si les entrées sont incorrectes, cache le toast
+        } else {
+            toastBootstrap2.show();  // Si tout est ok, affiche le toast
 
-        // Hide function 3
-        if (toastLiveExample3) {
-            const toastBootstrap3 = bootstrap.Toast.getOrCreateInstance(toastLiveExample3);
-            toastBootstrap3.hide();
+            // Hide function 1
+            if (toastLiveExample1) {
+                const toastBootstrap1 = bootstrap.Toast.getOrCreateInstance(toastLiveExample1);
+                toastBootstrap1.hide();
+            }
+
+            // Hide function 3
+            if (toastLiveExample3) {
+                const toastBootstrap3 = bootstrap.Toast.getOrCreateInstance(toastLiveExample3);
+                toastBootstrap3.hide();
+            }
         }
     });
 
@@ -1312,16 +1319,22 @@ if (toastTrigger3) {
     toastTrigger3.addEventListener('click', () => {
         toastBootstrap3.show();
 
-        // Hide function 1
-        if (toastLiveExample1) {
-            const toastBootstrap1 = bootstrap.Toast.getOrCreateInstance(toastLiveExample1);
-            toastBootstrap1.hide();
-        }
+        if (melody.length === 0) {
+            toastBootstrap3.hide();  // Si les entrées sont incorrectes, cache le toast
+        } else {
+            toastBootstrap3.show();  // Si tout est ok, affiche le toast
 
-        // Hide function 2
-        if (toastLiveExample2) {
-            const toastBootstrap2 = bootstrap.Toast.getOrCreateInstance(toastLiveExample2);
-            toastBootstrap2.hide();
+            // Hide function 2
+            if (toastLiveExample2) {
+                const toastBootstrap2 = bootstrap.Toast.getOrCreateInstance(toastLiveExample2);
+                toastBootstrap2.hide();
+            }
+
+            // Hide function 1
+            if (toastLiveExample1) {
+                const toastBootstrap1 = bootstrap.Toast.getOrCreateInstance(toastLiveExample1);
+                toastBootstrap1.hide();
+            }
         }
     });
 }
