@@ -161,9 +161,15 @@ git push
 dependencies with python /!\ 3.10 /!\ import - requirements.txt 
 # TERMINAL COMMANDES :
 # 1- Install python3.10 + venv
+```bash
 python3.10 -m venv venv
+```
 # 2- Activate venv
-source venv/bin/activate (mac/linux) /!\ If 'activate' is not in 'venv/bin' -> remove 'venv' and retry first step
+```bash
+source venv/bin/activate # (mac/linux) - If 'activate' is not in 'venv/bin' -> remove 'venv' and retry first step
+```
 # 3- install dependencies
+```bash
 pip install -r requirements.txt
+```
 #
