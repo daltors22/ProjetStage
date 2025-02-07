@@ -157,12 +157,13 @@ git add compilation_requete_fuzzy # add the modifications of the "file" (the sub
 git commit -m "Update fuzzy version"
 git push
 ```
-# MAC OS SETUP -> dependencies with python /!\ 3.10 /!\ import - requirements.txt 
+# MAC OS SETUP 
+dependencies with python /!\ 3.10 /!\ import - requirements.txt 
 # TERMINAL COMMANDES :
-#
-# IF the activate file is not in venv/bin -> remove the venv and retry first step
-#
-# 1- python3.10 -m venv venv
-# 2- source venv/bin/activate (mac/linux) /// .\venv\Scripts\activate (winddows)
-# 3- install dependencies -> pip install -r requirements.txt
+# 1- Install python3.10 + venv
+python3.10 -m venv venv
+# 2- Activate venv
+source venv/bin/activate (mac/linux) /!\ If 'activate' is not in 'venv/bin' -> remove 'venv' and retry first step
+# 3- install dependencies
+pip install -r requirements.txt
 #
