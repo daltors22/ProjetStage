@@ -34,6 +34,9 @@ app.get("/plus", function (req, res) {
 app.get("/references", function (req, res) {
       res.render("references");
     });
+
+// Servir les fichiers statiques depuis "assets/public"
+app.use('/images', express.static(path.join(process.cwd(), 'assets/public/images')));
     
 // Route for index page
 app.get("/interface", async function (req, res) {

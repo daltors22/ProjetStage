@@ -30,10 +30,10 @@
 <%- include('./partials/header', { currentPage: 'interface' }); %>
 <body>
   <div class="searchbar-box">
-    <h1 class="searchbar-title">Comment effectuer une requête ?</h1>
+    <h1 class="searchbar-title">Guide et astuces</h1>
   </div>
-  <div class="container my-5">
-    <div class="card shadow-sm p-4">
+  <div class="container my-5 d-flex justify-content-center">
+    <div class="card shadow-sm p-5">
       <h2 class="fw-bold text-center mb-4">Guide d'utilisation du Piano Virtuel</h2>
       <p class="text-muted text-center">Apprenez à utiliser le piano et les différentes options de recherche sur le site.</p>
   
@@ -41,8 +41,31 @@
       <div class="card mb-4">
         <div class="card-body">
           <h4 class="fw-bold">🎹 Utiliser le piano virtuel</h4>
+          <hr>
+          <br>
           <p>Le piano interactif vous permet de jouer des notes en cliquant dessus ou via votre clavier.</p>
-          <img src="chemin-vers-image-piano.jpg" class="img-fluid rounded" alt="Interface du piano">
+          <p>En fonction de la durée de l'appui (<em>touche ordinateur</em>), la figure de note varie "croche, noir, blanche..".</p>
+          <p>*<em>Cliquer sur une note avec votre souris est tout à fait possible, mais la figure de note sera moins préçise <br> qu'avec le clavier
+             il est donc conseiller d'utiliser les options avancées "figures de notes" afin d'ajuster votre recherche.</em>
+          </p>
+          <br>
+          <div class="card" style="width: 50rem;">
+            <img src="/images/1.png" class="img-fluid rounded" alt="Interface du piano">
+          </div>
+          <br>
+          <hr>
+          <p>Le piano interactif vous permet de jouer des notes en cliquant dessus ou via votre clavier.</p>
+          <hr>
+          <br>
+          <div class="card" style="width: 50rem;">
+            <img src="/images/2.png" class="img-fluid rounded" alt="Interface du piano">
+          </div>
+          <hr>
+          <p>L'option "touches" permet quant à elle d'afficher ou non les notes et touches du clavier associées.</p>
+          <hr>
+          <div class="card" style="width: 50rem;">
+            <img src="/images/3.png" class="img-fluid rounded" alt="Interface du piano">
+          </div>
         </div>
       </div>
   
@@ -61,9 +84,9 @@
           <h4 class="fw-bold">⚙️ Comprendre les options</h4>
           <p>Chaque option vous permet d'affiner vos résultats et de personnaliser votre expérience.</p>
           <ul>
-            <li><strong>Mode apprentissage</strong> : ralentit le morceau pour vous aider à suivre.</li>
-            <li><strong>Tonalité</strong> : filtre les morceaux par gamme musicale.</li>
-            <li><strong>Favoris</strong> : sauvegarde vos morceaux préférés.</li>
+            <li><strong>Mode recherche exacte</strong> : ralentit le morceau pour vous aider à suivre.</li>
+            <li><strong>Mode recherche mélodique approchée</strong> : filtre les morceaux par gamme musicale.</li>
+            <li><strong>Mode recherche rythmique approchée</strong> : sauvegarde vos morceaux préférés.</li>
           </ul>
         </div>
       </div>
