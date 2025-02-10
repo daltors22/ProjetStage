@@ -63,6 +63,10 @@ app.get("/interface", async function (req, res) {
   });
 });
 
+// Is route help page
+app.get("/help", function (req, res) {
+  res.render("help");
+});
 
 /*
 // Route for about page

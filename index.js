@@ -189,6 +189,17 @@ app.get('/searchInterface', async function (req, res) {
 });
 
 /**
+ * Route for help page
+ * 
+ * GET
+ *
+ * @constant /help
+ */
+app.get("/help", function (req, res) {
+    res.render("help");
+});
+
+/**
  * This endpoint will redirect the user to the 'collections' page .
  * Before redirecting, it queries the database in order to get the list of collections.
  *
