@@ -1338,3 +1338,12 @@ if (toastTrigger3) {
         }
     });
 }
+
+/**
+ * Toast Help button
+ */
+document.addEventListener("DOMContentLoaded", function () {
+    var toastEl = document.querySelector('.toast');
+    var toast = new bootstrap.Toast(toastEl);
+    setTimeout(() => toast.show(), 2000); // S'affiche après 2 secondes
+  });
