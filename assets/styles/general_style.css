@@ -90,6 +90,11 @@ form button[type="submit"] {
 .footer a:hover {
     text-decoration: underline !important;
 }
+/* style for h5 title -> footer */
+.no-wrap {
+    white-space: nowrap; 
+  }
+  
 
 label {
     user-select: none;
