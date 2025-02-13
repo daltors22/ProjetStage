@@ -386,7 +386,24 @@ header input {
   text-decoration: none;
 }
 
-.custom-toast a {
+.custom-toast1 {
+  max-width: 140px !important;
+  position: fixed;
+  top: 85%;
+  left: 5%;
+  text-decoration: none !important;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+  background-color: #006485;
+}
+
+.custom-toast a, .custom-toast1 a{
   text-decoration: none;
 }
 

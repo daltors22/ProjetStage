@@ -189,6 +189,33 @@ app.get('/searchInterface', async function (req, res) {
 });
 
 /**
+ * Route for the research page with the microphone interface.
+ *
+ * GET
+ *
+ * @constant /formulateQueryFromMicrophone
+ */
+app.get('/formulateQueryFromMicrophone', async function (req, res) {
+    let authors = [];
+
+    try {
+        // The query to get the authors is necessary to display the list of possible collections
+        const authorQuery = "MATCH (s:Score) RETURN DISTINCT s.collection";
+        let temp2 = await session.run(authorQuery);
+        temp2 = temp2.records;
+        temp2.forEach((record) => {
+            authors.push(record._fields[0]);
+        });
+    } catch(err) {
+        log('error', `/formulateQueryFromMicrophone: ${err}`)
+    }
+
+    res.render("formulateQueryFromMicrophone", {
+        authors: authors
+    });
+});
+
+/**
  * Route for help page
  * 
  * GET
@@ -533,6 +560,70 @@ app.post('/formulateQuery', (req, res) => {
         return res.json({ query: allData });
     });
 });
+// MIC POST
+app.post('/formulateQueryFromMicrophone', (req, res) => {
+    console.log("Requête depuis micro :", req.body);
+  
+    // Récupération des paramètres
+    const notes = req.body.notes;
+    let pitch_distance = req.body.pitch_distance;
+    let duration_factor = req.body.duration_factor;
+    let duration_gap = req.body.duration_gap;
+    let alpha = req.body.alpha;
+    let allow_transposition = req.body.allow_transposition;
+    let collection = req.body.collection;
+  
+    // Attribution des valeurs par défaut si nécessaire
+    if (pitch_distance == null) pitch_distance = 0;
+    if (duration_factor == null) duration_factor = 1;
+    if (duration_gap == null) duration_gap = 0;
+    if (alpha == null) alpha = 0;
+    if (allow_transposition == null) allow_transposition = false;
+  
+    // Préparation des arguments pour le script Python
+    const { spawn } = require('child_process');
+    let args = [
+      'compilation_requete_fuzzy/main_parser.py',
+      'write',
+      '-p', pitch_distance,
+      '-f', duration_factor,
+      '-g', duration_gap,
+      '-a', alpha,
+      notes
+    ];
+  
+    if (allow_transposition)
+      args.push('-t');
+  
+    if (collection != null && collection.trim() !== '') {
+      args.push('-c');
+      args.push(collection);
+    }
+  
+    console.log("Lancement du script Python avec : ", args.join(' '));
+    let pyParserWrite = spawn('python3', args);
+  
+    let allData = '';
+    pyParserWrite.stdout.on('data', (data) => {
+      console.log(`Données reçues: ${data}`);
+      allData += data.toString();
+    });
+  
+    let errors = [];
+    pyParserWrite.stderr.on('data', (data) => {
+      console.error(`Erreur: ${data}`);
+      errors.push(data.toString());
+    });
+  
+    pyParserWrite.stdout.on('close', () => {
+      console.log("Connexion fermée.");
+      if (errors.length > 0) {
+        return res.json({ error: errors.slice(-1)[0] });
+      }
+      return res.json({ query: allData });
+    });
+  });
+  
 
 /**
  * This endpoint calls the python parser to send a fuzzy query and process the result of it.
