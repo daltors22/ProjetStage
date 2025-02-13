@@ -1347,3 +1347,14 @@ document.addEventListener("DOMContentLoaded", function () {
     var toast = new bootstrap.Toast(toastEl);
     setTimeout(() => toast.show(), 2000); // S'affiche après 2 secondes
   });
+
+/**
+ * lock del/supp only in fuzzy-options
+ */
+document.querySelectorAll('.fuzzy-options input').forEach(input => {
+input.addEventListener('keydown', (event) => {
+    if (event.key === 'Delete' || event.key === 'Backspace') {
+    event.stopPropagation();
+    }
+});
+});
