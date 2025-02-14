@@ -41,7 +41,7 @@ function handleMicSubmit(e) {
     formData.forEach((value, key) => {
       dataObj[key] = value;
     });
-  
+    console.log(dataObj);
     fetch(`${BASE_PATH}/formulateQueryFromMicrophone`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
