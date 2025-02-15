@@ -20,6 +20,9 @@
 
   <!-- Vexflow for the music notes -->
   <script src="https://unpkg.com/vexflow/releases/vexflow-debug.js"></script>
+  <!-- Ajoutez Aubio.js depuis un CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/aubiojs@0.2.1/dist/aubio.min.js"></script>
+
 
   <!-- Verovio for the svg representation of the scores previews -->
   <script src="./scripts/verovio-toolkit-wasm.js" defer></script>
@@ -28,6 +31,7 @@
   <!-- <script type="text/javascript" src="./scripts/search_interface.js"></script> -->
   <script type="module" src="./scripts/api_microphone.js"></script>
   <script type="module" src="./scripts/micro_interface.js"></script>
+  <script type="module" src="./scripts/aubio_microphone.js"></script>
 
   <!-- Jquery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -163,6 +167,16 @@
     <button id="start-mic">Démarrer l'écoute</button>
     <button id="stop-mic">Arrêter l'écoute</button>
   </div>
+
+
+  <!-- Conteneur pour la portée musicale (VexFlow) -->
+  <div id="music-score" style="margin: 20px 0;"></div>
+
+  <!-- Barre de progression pour la durée de capture -->
+  <div class="progress" style="height: 20px; margin-bottom: 20px;">
+    <div id="capture-progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
+  </div>
+
   
   <!-- Affichage des notes détectées -->
   <div>
@@ -196,7 +210,7 @@
     </div>
     <div class="collections-options">
         <label for="collections">Collection dans lesquelles rechercher : </label><br>
-        <select id="collections" name="collections">
+        <select id="collections" name="collection">
           <% for(var j = 0; j < authors.length; j++) { %>
             <option value='<%= authors[j] %>'><%= authors[j] %></option>
           <% } %>

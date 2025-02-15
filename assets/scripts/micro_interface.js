@@ -14,12 +14,38 @@ const BASE_PATH = window.BASE_PATH || ''; // ajustez si nécessaire
 /**
  * Initialise l'interface micro.
  */
+// micro_interface.js
+
+import { startAubioMicrophone, stopAubioMicrophone } from './aubio_microphone.js';
+
+document.addEventListener("DOMContentLoaded", initMicro);
+
 function initMicro() {
   const micForm = document.getElementById("microphone-form");
   if(micForm) {
     micForm.addEventListener("submit", handleMicSubmit);
   }
+  
+  const startBtn = document.getElementById('start-mic');
+  const stopBtn = document.getElementById('stop-mic');
+  if(startBtn) {
+    startBtn.addEventListener('click', () => {
+      startAubioMicrophone();
+    });
+  }
+  if(stopBtn) {
+    stopBtn.addEventListener('click', () => {
+      const notes = stopAubioMicrophone();
+      // Par exemple, mettez à jour le champ caché avec un format approprié pour le back-end.
+      // Vous pouvez adapter le format selon ce que votre parser Python attend.
+      document.getElementById('notes-input').value = '[' + detectedNotes.join(', ') + ']';
+      document.getElementById('detected-notes').textContent = JSON.stringify(notes);
+    });
+  }
 }
+
+// Reste de votre code existant pour le formulaire, etc.
+
 
 /**
  * Gère la soumission du formulaire pour le micro.
