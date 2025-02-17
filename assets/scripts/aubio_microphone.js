@@ -10,7 +10,7 @@ let detectedNotes = []; // Stocke les notes sous forme d'objets { pitch, rhythmi
 let noteStartTime = null; // Timestamp du début de la note en cours
 
 const bufferSize = 1024;
-const hopSize = 256; // Vous pouvez ajuster selon vos besoins
+const hopSize = 1024; // Vous pouvez ajuster selon vos besoins
 
 /**
  * Mappe une durée (en secondes) à une valeur rythmique.

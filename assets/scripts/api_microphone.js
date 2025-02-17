@@ -68,7 +68,7 @@ let detectedNotes = []; // Pour le format requis (ex: "[('c', 4), 4, 0]")
 let vfNotes = [];       // Pour l'affichage sur la portée (ex: "C4")
 
 // Paramètres de détection
-const MAX_NOTES = 6;          // Nombre maximum de notes à capter
+const MAX_NOTES = 4;          // Nombre maximum de notes à capter
 const MEASURE_DURATION = 4000; // Durée d'une mesure en ms (ici 4 sec)
 
 let progressBarInterval;
