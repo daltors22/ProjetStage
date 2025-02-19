@@ -16,6 +16,7 @@ const BASE_PATH = window.BASE_PATH || ''; // ajustez si nécessaire
  */
 // micro_interface.js
 
+
 import { startAubioMicrophone, stopAubioMicrophone } from './aubio_microphone.js';
 
 document.addEventListener("DOMContentLoaded", initMicro);

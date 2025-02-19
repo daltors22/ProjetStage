@@ -1,27 +1,26 @@
-// aubio_microphone.js
+/*******************************
+ * Fonctions utilitaires
+ *******************************/
+function computeRMS(buffer) {
+  let sum = 0;
+  for (let i = 0; i < buffer.length; i++) {
+    sum += buffer[i] * buffer[i];
+  }
+  return Math.sqrt(sum / buffer.length);
+}
 
-let audioContextAubio;
-let streamAubio;
-let scriptProcessorAubio;
-let aubioPitch;
-let aubioOnset;
+function frequencyToNoteNumber(frequency) {
+  return 12 * (Math.log(frequency / 440) / Math.log(2)) + 69;
+}
 
-let detectedNotes = []; // Stocke les notes sous forme d'objets { pitch, rhythmicValue, duration }
-let noteStartTime = null; // Timestamp du début de la note en cours
+function noteFromPitch(frequency) {
+  const noteNumber = Math.round(frequencyToNoteNumber(frequency));
+  const noteIndex = noteNumber % 12;
+  const noteNames = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+  const octave = Math.floor(noteNumber / 12) - 1;
+  return noteNames[noteIndex] + octave;
+}
 
-const bufferSize = 1024;
-const hopSize = 1024; // Vous pouvez ajuster selon vos besoins
-
-/**
- * Mappe une durée (en secondes) à une valeur rythmique.
- * Ajustez ces seuils selon le tempo attendu.
- *
- * Exemple de seuils (pour un tempo modéré) :
- * - Moins de 0.25 sec => croche (1/8)
- * - Entre 0.25 et 0.5 sec => noire (1/4)
- * - Entre 0.5 et 1 sec => blanche (1/2)
- * - Plus de 1 sec => ronde (1)
- */
 function getRhythmicValue(duration) {
   console.log("Durée mesurée :", duration);
   if (duration < 0.25) return { value: "croche", label: "1/8" };
@@ -30,115 +29,227 @@ function getRhythmicValue(duration) {
   else return { value: "ronde", label: "1" };
 }
 
-/**
- * Démarre la capture audio avec Aubio.js pour détecter le pitch et les onsets.
- */
-export async function startAubioMicrophone() {
-  // Initialisation du contexte et du flux audio
-  audioContextAubio = new (window.AudioContext || window.webkitAudioContext)();
-  streamAubio = await navigator.mediaDevices.getUserMedia({ audio: true });
-  const source = audioContextAubio.createMediaStreamSource(streamAubio);
+/*******************************
+ * Variables et paramètres
+ *******************************/
+let audioContext;
+let stream;
+let scriptProcessor;
+let aubioPitch;
+let aubioOnset;
 
-  // Création d'un ScriptProcessorNode
-  scriptProcessorAubio = audioContextAubio.createScriptProcessor(bufferSize, 1, 1);
-  source.connect(scriptProcessorAubio);
-  scriptProcessorAubio.connect(audioContextAubio.destination);
+let detectedNotes = []; // Tableau des notes détectées : { pitch, rhythmicValue, rhythmicLabel, duration }
+let noteStartTime = null; // Timestamp du début de la note en cours
+let isRunning = false;
 
-  // Initialisation des détecteurs Aubio
-  aubioPitch = new Aubio.Pitch("default", bufferSize, hopSize, audioContextAubio.sampleRate);
-  aubioOnset = new Aubio.Onset("default", bufferSize, hopSize, audioContextAubio.sampleRate);
+const bufferSize = 1024;
+const hopSize = 128;            // Ajustez selon votre instrument pour une bonne résolution
+const RMS_THRESHOLD = 0.03;     // Seuil pour ignorer les bruits faibles
 
+// Période réfractaire pour éviter les déclenchements multiples (en secondes)
+const REFRACTORY_PERIOD = 0.15;
+
+// Paramètres d'auto-stop
+const MAX_NOTES = 4;          // Arrête l'écoute dès que 4 notes sont détectées
+const MAX_DURATION = 5;      // Arrête l'écoute après 10 secondes
+
+let progressBarInterval = null;
+
+/*******************************
+ * Gestion du micro avec Aubio.js
+ *******************************/
+export async function startSuperMicrophone() {
+  if (isRunning) return;
+  isRunning = true;
   detectedNotes = [];
-  noteStartTime = audioContextAubio.currentTime;
+  noteStartTime = null;
+  updateMicIndicator(true);
+  resetProgressBar();
 
-  scriptProcessorAubio.onaudioprocess = function(event) {
-    console.log("Processing audio…");
+  try {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (e) {
+    console.error("Erreur d'accès au micro :", e);
+    isRunning = false;
+    updateMicIndicator(false);
+    return;
+  }
+  const source = audioContext.createMediaStreamSource(stream);
+
+  // Appliquer des filtres pour limiter les bruits parasite (passe-haut et passe-bas)
+  const highpass = audioContext.createBiquadFilter();
+  highpass.type = "highpass";
+  highpass.frequency.value = 80;
+  const lowpass = audioContext.createBiquadFilter();
+  lowpass.type = "lowpass";
+  lowpass.frequency.value = 1100;
+  source.connect(highpass);
+  highpass.connect(lowpass);
+
+  // Crée le ScriptProcessor pour analyser l'audio
+  scriptProcessor = audioContext.createScriptProcessor(bufferSize, 1, 1);
+  lowpass.connect(scriptProcessor);
+  scriptProcessor.connect(audioContext.destination);
+
+  // Vérifiez que la bibliothèque Aubio est chargée
+  if (typeof Aubio === "undefined") {
+    console.error("Aubio n'est pas défini. Vérifiez l'inclusion de la bibliothèque Aubio.js.");
+    isRunning = false;
+    updateMicIndicator(false);
+    return;
+  }
+  aubioPitch = new Aubio.Pitch("default", bufferSize, hopSize, audioContext.sampleRate);
+  aubioOnset = new Aubio.Onset("default", bufferSize, hopSize, audioContext.sampleRate);
+
+  noteStartTime = audioContext.currentTime;
+
+  // Auto-stop après MAX_DURATION secondes
+  setTimeout(() => {
+    if (isRunning) {
+      console.log("Durée maximale atteinte, arrêt du micro.");
+      stopSuperMicrophone();
+    }
+  }, MAX_DURATION * 1000);
+
+  scriptProcessor.onaudioprocess = function(event) {
+    if (!isRunning) return;
     const inputBuffer = event.inputBuffer.getChannelData(0);
-    const currentTime = audioContextAubio.currentTime;
+    const currentTime = audioContext.currentTime;
+    // Filtrer les signaux trop faibles pour éviter le bruit parasite
+    const rms = computeRMS(inputBuffer);
+    if (rms < RMS_THRESHOLD) return;
 
-    // Détection du pitch
-    let pitch = aubioPitch.do(inputBuffer);
-    // Vous pouvez vérifier et afficher le pitch si nécessaire :
-    // console.log("Pitch :", pitch);
+    const pitch = aubioPitch.do(inputBuffer);
+    const onsetDetected = aubioOnset.do(inputBuffer);
+    console.log("onsetDetected =", onsetDetected);
 
-    // Détection d'un onset (début d'une nouvelle note)
-    let onsetDetected = aubioOnset.do(inputBuffer);
     if (onsetDetected) {
-      // Si une note était en cours, calculez la durée écoulée
+      // Appliquer une période réfractaire
+      if (noteStartTime && (currentTime - noteStartTime) < REFRACTORY_PERIOD) {
+        return;
+      }
       if (noteStartTime !== null) {
         const duration = currentTime - noteStartTime;
         const rhythmicInfo = getRhythmicValue(duration);
-        // On enregistre la note précédente avec son pitch et sa valeur rythmique
         detectedNotes.push({
           pitch: pitch,
           rhythmicValue: rhythmicInfo.value,
           rhythmicLabel: rhythmicInfo.label,
           duration: duration
         });
-        console.log(
-          `Note détectée : pitch=${pitch.toFixed(2)} Hz, durée=${duration.toFixed(2)} s => ${rhythmicInfo.value} (${rhythmicInfo.label})`
-        );
-        // Ici, vous pouvez appeler une fonction pour mettre à jour l'affichage (par exemple, une portée musicale)
+        console.log(`Note détectée : pitch=${pitch.toFixed(2)} Hz, durée=${duration.toFixed(2)} s => ${rhythmicInfo.value} (${rhythmicInfo.label})`);
+        updateStaff(noteFromPitch(pitch));
       }
-      // Démarrer une nouvelle note
       noteStartTime = currentTime;
+      if (detectedNotes.length >= MAX_NOTES) {
+        console.log("Nombre maximal de notes atteint, arrêt du micro.");
+        stopSuperMicrophone();
+      }
     }
   };
 
-  console.log("Aubio microphone démarré");
+  startProgressBar();
+  console.log("Super API Micro démarrée");
 }
 
-/**
- * Arrête la capture audio et libère les ressources.
- */
-export function stopAubioMicrophone() {
-    if (streamAubio) {
-      streamAubio.getTracks().forEach(track => track.stop());
-    }
-    if (audioContextAubio) {
-      audioContextAubio.close();
-    }
-    if (scriptProcessorAubio) {
-      scriptProcessorAubio.disconnect();
-    }
-    
-    // Correction des erreurs d'octave
-    const correctedNotes = correctOctaveErrors(detectedNotes);
-    console.log("Capture Aubio arrêtée. Notes corrigées :", correctedNotes);
-    
-    return correctedNotes;
+export function stopSuperMicrophone() {
+  if (!isRunning) return;
+  isRunning = false;
+  
+  if (stream) {
+    stream.getTracks().forEach(track => {
+      track.stop();
+      console.log("Track stoppé :", track.label);
+    });
+    stream = null;
   }
   
+  if (scriptProcessor) {
+    scriptProcessor.disconnect();
+    scriptProcessor = null;
+  }
+  
+  if (audioContext) {
+    audioContext.close().then(() => {
+      console.log("AudioContext fermé");
+      audioContext = null;
+      updateMicIndicator(false);
+    }).catch(err => {
+      console.error("Erreur lors de la fermeture de l'AudioContext :", err);
+      updateMicIndicator(false);
+    });
+  } else {
+    updateMicIndicator(false);
+  }
+  
+  clearInterval(progressBarInterval);
+  console.log("Super API Micro arrêtée. Notes détectées :", detectedNotes);
+  return detectedNotes;
+}
 
-/**
- * Corrige les erreurs d'octave dans la séquence de notes détectées.
- * Ici, on suppose que si deux notes consécutives ont la même lettre mais une différence d’octave de 1,
- * et si cela semble improbable dans le contexte, on force l’octave de la seconde note à celle de la première.
- *
- * @param {Array} notes - Tableau d'objets avec une propriété `pitch` (en Hz).
- * @returns {Array} notes corrigées avec une nouvelle propriété `correctedNote` (par ex. "a4").
- */
-function correctOctaveErrors(notes) {
-    if (notes.length < 2) return notes;
-  
-    // On suppose que vous avez une fonction `noteFromPitch` qui convertit une fréquence en note (ex. "a4")
-    let correctedNotes = [Object.assign({}, notes[0], { correctedNote: noteFromPitch(notes[0].pitch) })];
-  
-    for (let i = 1; i < notes.length; i++) {
-      let prevNoteStr = noteFromPitch(correctedNotes[i - 1].pitch); // Note précédente corrigée
-      let currentNoteStr = noteFromPitch(notes[i].pitch);
-      // Extraction de la lettre et de l'octave (ici, on suppose un format "a4", "g#3", etc.)
-      let prevLetter = prevNoteStr[0];
-      let currLetter = currentNoteStr[0];
-      let prevOctave = parseInt(prevNoteStr.slice(-1), 10);
-      let currOctave = parseInt(currentNoteStr.slice(-1), 10);
-  
-      // Si la lettre est identique et que la différence d'octave est de 1, on corrige
-      if (prevLetter === currLetter && Math.abs(prevOctave - currOctave) === 1) {
-        // On force l'octave de la note actuelle à celle de la note précédente
-        currentNoteStr = currLetter + prevNoteStr.slice(-1);
-      }
-      correctedNotes.push(Object.assign({}, notes[i], { correctedNote: currentNoteStr }));
+/*******************************
+ * Mise à jour de l'UI
+ *******************************/
+function updateMicIndicator(isActive) {
+  const indicator = document.getElementById("mic-indicator");
+  if (indicator) {
+    if (isActive) {
+      indicator.textContent = "Micro actif";
+      indicator.classList.add("active");
+      indicator.classList.remove("inactive");
+    } else {
+      indicator.textContent = "Micro arrêté";
+      indicator.classList.add("inactive");
+      indicator.classList.remove("active");
     }
-    return correctedNotes;
   }
+}
+
+function updateStaff(noteStr) {
+  // Utilisation de VexFlow pour dessiner la portée avec les notes détectées
+  const VF = Vex.Flow;
+  const div = document.getElementById("music-score");
+  div.innerHTML = "";
+  // On génère le tableau de notes en utilisant detectedNotes
+  let vfNotes = detectedNotes.map(noteObj => noteFromPitch(noteObj.pitch));
+  if (!vfNotes.length) return;
+  const width = Math.max(500, vfNotes.length * 100);
+  const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
+  renderer.resize(width, 200);
+  const context = renderer.getContext();
+  const stave = new VF.Stave(10, 40, width - 20);
+  stave.addClef("treble").setContext(context).draw();
+  const notes = vfNotes.map(noteStr => {
+    let letter = noteStr[0].toLowerCase();
+    let octave = noteStr.slice(-1);
+    let key = `${letter}/${octave}`;
+    let staveNote = new VF.StaveNote({ clef: "treble", keys: [key], duration: "q" });
+    if (noteStr.includes("#")) {
+      staveNote.addAccidental(0, new VF.Accidental("#"));
+    } else if (noteStr.includes("b")) {
+      staveNote.addAccidental(0, new VF.Accidental("b"));
+    }
+    return staveNote;
+  });
+  VF.Formatter.FormatAndDraw(context, stave, notes);
+}
+
+function startProgressBar() {
+  const progressBar = document.getElementById("capture-progress");
+  progressBar.style.width = "0%";
+  const startTime = Date.now();
+  progressBarInterval = setInterval(() => {
+    const elapsed = Date.now() - startTime;
+    const percent = Math.min(100, (elapsed / MAX_DURATION / 1000) * 100);
+    progressBar.style.width = percent + "%";
+    if (elapsed >= MAX_DURATION * 1000) {
+      clearInterval(progressBarInterval);
+    }
+  }, 50);
+}
+
+function resetProgressBar() {
+  const progressBar = document.getElementById("capture-progress");
+  progressBar.style.width = "0%";
+}

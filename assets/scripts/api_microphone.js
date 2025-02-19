@@ -73,21 +73,23 @@ const MEASURE_DURATION = 4000; // Durée d'une mesure en ms (ici 4 sec)
 
 let progressBarInterval;
 
+/**
+ * Fonction pour démarrer la capture audio.
+ */
 async function startMicrophone() {
   if (isListening) return;
   isListening = true;
   detectedNotes = [];
   vfNotes = [];
-  // Réinitialise la barre de progression
   resetProgressBar();
-
+  
   try {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     microphoneStream = stream;
     const source = audioContext.createMediaStreamSource(stream);
     
-    // --- Filtres pour limiter les bruits parasites ---
+    // Filtres pour limiter les bruits parasites
     const highpassFilter = audioContext.createBiquadFilter();
     highpassFilter.type = 'highpass';
     highpassFilter.frequency.value = 80; // élimine les basses fréquences
@@ -99,22 +101,23 @@ async function startMicrophone() {
     source.connect(highpassFilter);
     highpassFilter.connect(lowpassFilter);
     
-    // ScriptProcessor pour analyser les données audio (buffer de 2048 échantillons)
+    // Création d'un ScriptProcessor pour analyser l'audio (buffer de 2048 échantillons)
     scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
     lowpassFilter.connect(scriptProcessor);
     scriptProcessor.connect(audioContext.destination);
-    // -----------------------------------------------------------
     
-    // Démarre l'animation de la barre de progression
-    startProgressBar();
-    
-    // Arrête l'écoute après la durée d'une mesure
+    // Auto-stop après MEASURE_DURATION millisecondes
     setTimeout(() => {
-      stopMicrophone();
+      if (isListening) {
+        console.log("Durée maximale atteinte, arrêt du micro.");
+        stopMicrophone();
+      }
     }, MEASURE_DURATION);
-
+    
     scriptProcessor.onaudioprocess = function(event) {
+      // Auto-stop si nombre de notes atteint
       if (detectedNotes.length >= MAX_NOTES) {
+        console.log("Nombre maximal de notes atteint, arrêt du micro.");
         stopMicrophone();
         return;
       }
@@ -123,36 +126,63 @@ async function startMicrophone() {
       if (pitch !== -1) {
         const note = noteFromPitch(pitch);
         const formattedNote = formatNote(note);
-        // Évite les doublons
-        if (detectedNotes.length === 0 || detectedNotes[detectedNotes.length - 1] !== formattedNote) {
-          detectedNotes.push(formattedNote);
-          document.getElementById('detected-notes').textContent = detectedNotes.join(', ');
-          document.getElementById('notes-input').value = '[' + detectedNotes.join(', ') + ']';
-          
-          // 
-          vfNotes.push(note);
-          updateStaff(); // Mise à jour de la portée
-        }
+        // Ici, on ajoute la note même si identique à la précédente (pas de filtre sur doublon)
+        detectedNotes.push(formattedNote);
+        document.getElementById('detected-notes').textContent = detectedNotes.join(', ');
+        document.getElementById('notes-input').value = '[' + detectedNotes.join(', ') + ']';
+        
+        // Mise à jour pour la portée (VexFlow)
+        vfNotes.push(note);
+        updateStaff();
       }
     };
-
+    startProgressBar();
   } catch (error) {
     console.error("Erreur lors de l'accès au micro :", error);
   }
 }
 
+/**
+ * Fonction pour arrêter la capture audio et libérer toutes les ressources.
+ */
 function stopMicrophone() {
   isListening = false;
+  
+  // Arrête chaque piste du flux
   if (microphoneStream) {
-    microphoneStream.getTracks().forEach(track => track.stop());
+    microphoneStream.getTracks().forEach(track => {
+      track.stop();
+      console.log("Track stoppé :", track.label);
+    });
+    microphoneStream = null;
   }
+  
+  // Déconnecte le ScriptProcessor et le met à null
+  if (scriptProcessor) {
+    scriptProcessor.disconnect();
+    scriptProcessor = null;
+  }
+  
+  // Ferme l'AudioContext et le met à null
   if (audioContext) {
-    audioContext.close();
+    audioContext.close().then(() => {
+      console.log("AudioContext fermé");
+      audioContext = null;
+      updateMicIndicator(false);
+    }).catch(err => {
+      console.error("Erreur lors de la fermeture de l'AudioContext :", err);
+      updateMicIndicator(false);
+    });
+  } else {
+    updateMicIndicator(false);
   }
+  
   clearInterval(progressBarInterval);
 }
 
-// Formatage pour le format Python attendu (pour le back-end)
+/**
+ * Formatte la note pour le back-end (par exemple, "[('c', 4), 4, 0]").
+ */
 function formatNote(noteStr) {
   const noteLetter = noteStr.slice(0, noteStr.length - 1).toLowerCase();
   const octave = parseInt(noteStr.slice(-1), 10);
@@ -188,7 +218,7 @@ function updateStaff() {
   const div = document.getElementById("music-score");
   div.innerHTML = ""; // Efface le contenu précédent
 
-  // On définit une largeur minimale pour la portée (ici 500px, avec 100px supplémentaires par note)
+  // Largeur minimale de la portée : 500px, plus 100px par note
   const width = Math.max(500, vfNotes.length * 100);
   const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
   renderer.resize(width, 200);
@@ -196,7 +226,6 @@ function updateStaff() {
   const stave = new VF.Stave(10, 40, width - 20);
   stave.addClef("treble").setContext(context).draw();
 
-  // Si des notes ont été jouées, on les affiche
   if (vfNotes.length > 0) {
     const notes = vfNotes.map(noteStr => {
       const key = noteToVFKey(noteStr);
@@ -212,12 +241,7 @@ function updateStaff() {
   }
 }
 
-// --- Fonction pour dessiner la portée vide au chargement de la page ---
-document.addEventListener("DOMContentLoaded", () => {
-  updateStaff(); // Affiche une portée vide dès le départ
-});
-
-// --- Fonctions pour la barre de progression ---
+/* --- Barre de progression --- */
 function startProgressBar() {
   const progressBar = document.getElementById("capture-progress");
   progressBar.style.width = "0%";
@@ -237,6 +261,27 @@ function resetProgressBar() {
   progressBar.style.width = "0%";
 }
 
-// --- Événements sur les boutons ---
+/* --- Indicateur d'état du micro --- */
+function updateMicIndicator(isActive) {
+  const indicator = document.getElementById("mic-indicator");
+  if (indicator) {
+    if (isActive) {
+      indicator.textContent = "Micro actif";
+      indicator.classList.add("active");
+      indicator.classList.remove("inactive");
+    } else {
+      indicator.textContent = "Micro arrêté";
+      indicator.classList.add("inactive");
+      indicator.classList.remove("active");
+    }
+  }
+}
+
+/* --- Initialisation au chargement de la page --- */
+document.addEventListener("DOMContentLoaded", () => {
+  updateStaff(); // Affiche une portée vide dès le départ
+});
+
+/* --- Événements sur les boutons --- */
 document.getElementById('start-mic').addEventListener('click', startMicrophone);
 document.getElementById('stop-mic').addEventListener('click', stopMicrophone);
