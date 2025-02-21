@@ -47,7 +47,7 @@ const hopSize = 128;            // Ajustez selon votre instrument pour une bonne
 const RMS_THRESHOLD = 0.03;     // Seuil pour ignorer les bruits faibles
 
 // Période réfractaire pour éviter les déclenchements multiples (en secondes)
-const REFRACTORY_PERIOD = 0.15;
+const REFRACTORY_PERIOD = 0.5;
 
 // Paramètres d'auto-stop
 const MAX_NOTES = 4;          // Arrête l'écoute dès que 4 notes sont détectées
