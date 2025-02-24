@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./styles/semantic.min.css" />
   <link rel="stylesheet" href="./styles/general_style.css" />
   <link rel="stylesheet" href="./styles/paginated_results.css" />
-  <link rel="stylesheet" href="./styles/results_style.css" />
+  <link rel="stylesheet" href="./styles/result_style.css" />
   
   
   <!-- CSS Bootstrap (uniquement Bootstrap 5) -->
@@ -20,18 +20,14 @@
 
   <!-- Vexflow for the music notes -->
   <script src="https://unpkg.com/vexflow/releases/vexflow-debug.js"></script>
-  <!-- Ajoutez Aubio.js depuis un CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/aubiojs@0.2.1/dist/aubio.min.js"></script>
-
-
+ 
   <!-- Verovio for the svg representation of the scores previews -->
   <script src="./scripts/verovio-toolkit-wasm.js" defer></script>
 
   <!-- Javascript of the page -->
   <!-- <script type="text/javascript" src="./scripts/search_interface.js"></script> -->
-  <script type="module" src="./scripts/api_microphone.js"></script>
   <script type="module" src="./scripts/micro_interface.js"></script>
-  <script type="module" src="./scripts/aubio_microphone.js"></script>
+  <script type="module" src="./scripts/recorder.js"></script>
 
   <!-- Jquery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -157,32 +153,22 @@
         <i class="bi bi-mic-fill"></i>
     </button>
     <div id="music-score"></div>
-      <div class="clear_buttons">
-        <button type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;", id='clear_all'>Supprimer tout</button>
-        <button type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;", id='clear_last_note'>Supprimer la dernière note</button>
-        <button type="button" class="btn btn-info text-white" style="background-color: #7ab6e0;", id="play_melody">Jouer la mélodie</button>
-      </div>
-  <!-- Contrôles pour démarrer/arrêter l'écoute -->
-  <div>
-    <button id="start-mic">Démarrer l'écoute</button>
-    <button id="stop-mic">Arrêter l'écoute</button>
+     
+
+    <!-- Section d'enregistrement audio -->
+  <div class="recorder-container">
+    <button id="start-rec" class="btn btn-primary">Démarrer l'enregistrement</button>
+    <button id="stop-rec" class="btn btn-danger">Arrêter l'enregistrement</button>
+    <div id="rec-indicator" class="inactive" style="margin-top:10px;">Prêt à enregistrer</div>
+    <div id="capture-progress" class="progress-bar" style="width: 0%; height: 20px; background-color: #007bff; margin-top:10px;"></div>
+    <a id="download-link" style="display: none; margin-top:10px;">Télécharger l'enregistrement (.wav)</a>
   </div>
+  
 
 
   <!-- Conteneur pour la portée musicale (VexFlow) -->
   <div id="music-score" style="margin: 20px 0;"></div>
 
-  <!-- Barre de progression pour la durée de capture -->
-  <div class="progress" style="height: 20px; margin-bottom: 20px;">
-    <div id="capture-progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
-  </div>
-
-  
-  <!-- Affichage des notes détectées -->
-  <div>
-    <p>Notes détectées : <span id="detected-notes">Aucune</span></p>
-  </div>
-  
   <!-- Formulaire pour envoyer la requête -->
   <form id="microphone-form" action="/formulateQueryFromMicrophone" method="POST">
     <!-- Champ caché qui contiendra les notes au format requis -->

@@ -2,8 +2,6 @@
 import { loadPageN } from './paginated_results.js';
 import { unifyResults, extractMelodyFromQuery } from './preview_scores.js';
 
-//============= Initialisation au DOMContentLoaded =============//
-document.addEventListener("DOMContentLoaded", initMicro);
 
 //============= Variables globales =============//
 // BASE_PATH doit être défini (par exemple, via une variable globale ou importé depuis un autre module)
@@ -16,35 +14,19 @@ const BASE_PATH = window.BASE_PATH || ''; // ajustez si nécessaire
  */
 // micro_interface.js
 
+import { startRecording, stopRecording } from './micro_recorder_wav.js';
 
-import { startAubioMicrophone, stopAubioMicrophone } from './aubio_microphone.js';
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById('start-rec').addEventListener('click', () => {
+    // Démarrer l'enregistrement pour 5 secondes (ajustez la durée si nécessaire)
+    startRecording(5000);
+  });
+  document.getElementById('stop-rec').addEventListener('click', () => {
+    stopRecording();
+  });
+});
 
-document.addEventListener("DOMContentLoaded", initMicro);
-
-function initMicro() {
-  const micForm = document.getElementById("microphone-form");
-  if(micForm) {
-    micForm.addEventListener("submit", handleMicSubmit);
-  }
-  
-  const startBtn = document.getElementById('start-mic');
-  const stopBtn = document.getElementById('stop-mic');
-  if(startBtn) {
-    startBtn.addEventListener('click', () => {
-      startAubioMicrophone();
-    });
-  }
-  if(stopBtn) {
-    stopBtn.addEventListener('click', () => {
-      const notes = stopAubioMicrophone();
-      // Par exemple, mettez à jour le champ caché avec un format approprié pour le back-end.
-      // Vous pouvez adapter le format selon ce que votre parser Python attend.
-      document.getElementById('notes-input').value = '[' + detectedNotes.join(', ') + ']';
-      document.getElementById('detected-notes').textContent = JSON.stringify(notes);
-    });
-  }
-}
-
+ 
 // Reste de votre code existant pour le formulaire, etc.
 
 
@@ -158,5 +140,3 @@ function sendQuery(fuzzyQuery) {
 function getPageData() {
     return JSON.parse(document.getElementById('data').textContent);
 }
-
-  
