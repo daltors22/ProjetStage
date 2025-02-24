@@ -26,6 +26,7 @@
 
   <!-- Javascript of the page -->
   <!-- <script type="text/javascript" src="./scripts/search_interface.js"></script> -->
+  <script type="module" src="./scripts/search_interface.js"></script>
   <script type="module" src="./scripts/micro_interface.js"></script>
   <script type="module" src="./scripts/recorder.js"></script>
 
@@ -142,67 +143,132 @@
           padding: 5px;
           position: absolute;
       }
+      #styleCardReocrder{
+        box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+        border: none;
+        border-radius: 5px;
+      }
 </style>
 <body>
     <%- include('./partials/header', { currentPage: 'interface' }); %>
     <div class="searchbar-box">
         <h1 class="searchbar-title">Rechercher dans le contenu des partitions</h1>
     </div>
+  <br>
+  <br>
   <div class="content-wrapper" style="align-items: center;">
-    <button class="btn rounded-circle">
-        <i class="bi bi-mic-fill"></i>
+
+    <button id="spinner-bar" class="btn btn-outline-secondary btn-lg rounded-circle" style="width: 6rem; height: 6rem; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" disabled>
+      <i class="bi bi-mic-fill"></i>
     </button>
-    <div id="music-score"></div>
-     
-
+    <!--<div id="music-score"></div>-->
+    <hr>
     <!-- Section d'enregistrement audio -->
-  <div class="recorder-container">
-    <button id="start-rec" class="btn btn-primary">Démarrer l'enregistrement</button>
-    <button id="stop-rec" class="btn btn-danger">Arrêter l'enregistrement</button>
-    <div id="rec-indicator" class="inactive" style="margin-top:10px;">Prêt à enregistrer</div>
-    <div id="capture-progress" class="progress-bar" style="width: 0%; height: 20px; background-color: #007bff; margin-top:10px;"></div>
-    <a id="download-link" style="display: none; margin-top:10px;">Télécharger l'enregistrement (.wav)</a>
+    <div id="styleCardReocrder" class="card-body p-1 recorder-container d-flex flex-column text-center">
+      <button id="start-rec" class="btn btn text-white" style="background-color: #006485;">Démarrer l'enregistrement</button>
+      <!--<button id="stop-rec" class="btn btn-danger">Arrêter l'enregistrement</button>-->
+      <div id="rec-indicator" class="inactive text-secondary" style="margin-top:10px;">Prêt à enregistrer</div>
+      <div id="capture-progress" class="progress-bar" style="width: 0%; height: 10px; background-color: #006485; margin-top:10px; border-radius: 5px;"></div>
+      <div id="load-text-bar" class="text-primary"></div>
+      <a id="download-link" style="display: none; margin-top:10px;">Télécharger l'enregistrement (.wav)</a>
+    </div>
+<hr>
+  <!-- START TEST PRESET BUTTON -->
+  <div class="flex-column" style=" display: flex; gap:20px;">
+    <h4 class="text-center">Sélectionnez la correspondance</h4>
+      <div class="flex-row" style=" display: flex; gap:40px;">
+        <button id="stricte" type="button" class="btn text-white tooltip-lb" style="background-color: #7ab6e0;">Recherche exacte</button>
+        <button id="modereeMelo" type="button" class="btn text-white" style="background-color: #7ab6e0;">Recherche mélodique <br> approchée</button>
+        <button id="modereeRythm" type="button" class="btn text-white" style="background-color: #7ab6e0;">Recherche rythmique <br> approchée</button>
+        <!--<button id="libre" type="button" class="btn text-white" style="background-color: #7ab6e0;">Recherche exploratoire</button>-->
+      </div>
   </div>
-  
+  <hr>
+  <button id="toggleButton2" class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample" data-button="options2">
+    Options avancées
+  </button>
+  <hr>
+  <div style="min-height: 120px;">
+    <div class="collapse collapse-vertical" id="collapseWidthExample">
+      <div class="card card-body" style="width: 300px;">
+        <div class='general-options'>
+          <label class='tooltip-lb' id='pitch-lb'>
+            <input id='pitch-cb' type='checkbox' checked>
+            Hauteur des notes
+            <!-- <span class='tooltiptext'>Permet de prendre en compte / ignorer la hauteur des notes</span> -->
+          </label><br>
+          <label class='tooltip-lb' id='rhythm-lb'>
+            <input id='rhythm-cb' type='checkbox' checked>
+            Rythme
+            <!-- <span class='tooltiptext'>Permet de prendre en compte / ignorer le rythme (la durée) des notes</span> -->
+          </label><br>
+          <label id='transpose-lb' class='tooltip-lb'>
+            <input id='transpose-cb' type='checkbox'>
+            Autoriser les transpositions
+            <!-- <span class='tooltiptext'>Permet d'obtenir les partitions dont la hauteur des notes de la mélodie est décalée</span> -->
+          </label><br>
+          <!--<label id='contour-lb' class='tooltip-lb'>
+            <input id='contour-cb' type='checkbox'>
+            Correspondance du contour seulement
+            <span class='tooltiptext'>Garde seulement le signe des intervalles entres les notes (haut, bas, égal).</span>
+          </label>-->
+        </div>
+        <div class='fuzzy-options'>
+          <label class='tooltip-lb' id='pitch-dist-lb'>
+            Tolérance de hauteur
+            <input type=number min=0 value=0 step=0.5 id='pitch-dist-select' class='nb-select'>
+            <!-- <span class='tooltiptext'>Permet d'augmenter la tolérance sur la hauteur de note (en tons)</span> -->
+          </label><br>
 
+          <label class='tooltip-lb' id='duration-dist-lb'>
+            Facteur de durée
+            <input type=number min=1 value=1 step=0.125 id='duration-factor-select' class='nb-select-large'>
+            <!-- <span class='tooltiptext'>Permet d'augmenter la tolérance sur la durée des notes (coefficient multiplicateur).</span> -->
+          </label><br>
 
+          <label class='tooltip-lb' id='sequencing-dist-lb'>
+            Écart de durée
+            <input type=number min=0 value=0 step=0.125 id='duration-gap-select' class='nb-select-large'>
+            <!-- <span class='tooltiptext'>Permet de sauter des notes (en durée : 1 pour pleine, 0.5 pour ronde, 0.25 pour croche, ...)</span> -->
+          </label><br>
+
+          <label class='tooltip-lb' id='alpha-lb'>
+            Alpha
+            <input type=number min=0 max=100 value=0 step=5 id='alpha-select' class='nb-select'>
+            %
+            <!-- <span class='tooltiptext'>Permet de filtrer les résultats en retirant tous ceux qui ont un score inférieur à alpha.</span> -->
+          </label>
+          <hr>
+          <div class="clear_buttons">
+            <button type="button" class="btn  text-white send-button" style="background-color: #006485;", id="send-button">Recherche</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<div class="flex card card-body position relative">
+        <div class="flex flex-column position-absolute top-50 start-50 translate-middle">
+          <button>ronde</button>
+          <button>blanche</button>
+          <button>noir</button>
+          <button>croche</button>
+        </div>
+      </div>-->
+  </div>
+  <div class="collections-options">
+    <label for="collections">Collection dans lesquelles rechercher : </label><br>
+    <select id="collections" name="collection">
+      <% for(var j = 0; j < authors.length; j++) { %>
+        <option value='<%= authors[j] %>'><%= authors[j] %></option>
+      <% } %>
+    </select>
+  </div>
   <!-- Conteneur pour la portée musicale (VexFlow) -->
   <div id="music-score" style="margin: 20px 0;"></div>
-
+  
   <!-- Formulaire pour envoyer la requête -->
   <form id="microphone-form" action="/formulateQueryFromMicrophone" method="POST">
     <!-- Champ caché qui contiendra les notes au format requis -->
     <input type="hidden" name="notes" id="notes-input" value="">
-    
-    <div>
-      <label for="pitch_distance">Tolérance de hauteur :</label>
-      <input type="number" name="pitch_distance" id="pitch_distance" min="0" value="0" step="0.5">
-    </div>
-    <div>
-      <label for="duration_factor">Facteur de durée :</label>
-      <input type="number" name="duration_factor" id="duration_factor" min="1" value="1" step="0.125">
-    </div>
-    <div>
-      <label for="duration_gap">Écart de durée :</label>
-      <input type="number" name="duration_gap" id="duration_gap" min="0" value="0" step="0.125">
-    </div>
-    <div>
-      <label for="alpha">Alpha :</label>
-      <input type="number" name="alpha" id="alpha" min="0" max="100" value="0" step="5"> %
-    </div>
-    <div>
-      <label for="allow_transposition">Autoriser la transposition :</label>
-      <input type="checkbox" name="allow_transposition" id="allow_transposition" value="true">
-    </div>
-    <div class="collections-options">
-        <label for="collections">Collection dans lesquelles rechercher : </label><br>
-        <select id="collections" name="collection">
-          <% for(var j = 0; j < authors.length; j++) { %>
-            <option value='<%= authors[j] %>'><%= authors[j] %></option>
-          <% } %>
-        </select>
-      </div>
-    
     <button type="submit">Envoyer la requête</button>
   </form>
     <div class="card">

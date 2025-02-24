@@ -4,7 +4,7 @@ let recorder;        // Instance de Recorder.js
 let audioContext;    // AudioContext
 let stream;          // Le flux audio du micro
 let isRecording = false;
-let recordedChunks = [];  // Déclarez cette variable ici
+let recordedChunks = [];
 let progressInterval = null;
 
 export async function startRecording(duration = 5000) {
@@ -20,13 +20,26 @@ export async function startRecording(duration = 5000) {
   }
   
   const source = audioContext.createMediaStreamSource(stream);
+  const buttonRegister = document.getElementById("start-rec");
   // Crée une instance de Recorder (Recorder.js)
   recorder = new Recorder(source, { numChannels: 1 });
   recordedChunks = [];  // Réinitialise le tableau
   recorder.record();
   updateRecIndicator(true, "Enregistrement en cours...");
+  buttonRegister.className = "btn btn-outline-secondary";
   startProgressBar(duration);
-  
+  const loadBar = document.getElementById("load-text-bar");
+  let timeLeft = duration / 1000; // conversion en secondes
+  loadBar.textContent = `${timeLeft}s`;
+
+  const intervalId = setInterval(() => {
+    timeLeft--;
+    if (timeLeft >= 0) {
+      loadBar.textContent = `${timeLeft}s`;
+    } else {
+      clearInterval(intervalId);
+    }
+  }, 1000);
   // Arrête automatiquement l'enregistrement après 'duration' millisecondes
   setTimeout(() => {
     if (isRecording) {
@@ -46,6 +59,9 @@ export function stopRecording() {
   recorder.exportWAV(blob => {
     const audioUrl = URL.createObjectURL(blob);
     const downloadLink = document.getElementById("download-link");
+    const spinnerBar = document.getElementById("spinner-bar");
+    const buttonRegister = document.getElementById("start-rec");
+    const loadBar = document.getElementById("load-text-bar");
     if (downloadLink) {
       downloadLink.href = audioUrl;
       downloadLink.download = 'enregistrement.wav';
@@ -53,6 +69,9 @@ export function stopRecording() {
       downloadLink.textContent = 'Télécharger l\'enregistrement (.wav)';
     }
     updateRecIndicator(false, "Enregistrement terminé");
+    spinnerBar.className = "btn btn-outline-secondary btn-lg rounded-circle";
+    buttonRegister.className = "d-none";
+    loadBar.textContent = "";
     clearInterval(progressInterval);
   });
 }
@@ -73,8 +92,10 @@ function updateRecIndicator(isActive, message) {
 
 function startProgressBar(duration) {
   const progressBar = document.getElementById("capture-progress");
+  const spinnerBar = document.getElementById("spinner-bar");
   if (!progressBar) return;
   progressBar.style.width = "0%";
+  spinnerBar.className = "btn btn-outline-secondary btn-lg rounded-circle spinner-grow";
   const startTime = Date.now();
   progressInterval = setInterval(() => {
     const elapsed = Date.now() - startTime;
