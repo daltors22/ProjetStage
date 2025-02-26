@@ -47,6 +47,26 @@ export async function startRecording(duration = 5000) {
     }
   }, duration);
 }
+// ENDPOINT
+function sendAudioFile(blob) {
+  const formData = new FormData();
+  formData.append("audio", blob, "audio.wav");
+  console.log(formData);
+  fetch("/createQueryFromAudio", {
+    method: "POST",
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Query retournée :", data.query);
+    // Mettez à jour l'interface avec la query retournée
+    const queryResult = document.getElementById("query-result");
+    if(queryResult) queryResult.textContent = data.query;
+  })
+  .catch(err => {
+    console.error("Erreur lors de l'envoi du fichier audio :", err);
+  });
+}
 
 export function stopRecording() {
   if (!isRecording || !recorder) return;
@@ -73,6 +93,8 @@ export function stopRecording() {
     buttonRegister.className = "d-none";
     loadBar.textContent = "";
     clearInterval(progressInterval);
+
+    sendAudioFile(blob);
   });
 }
 

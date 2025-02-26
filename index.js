@@ -8,8 +8,24 @@ const express = require('express');
 const neo4j = require('neo4j-driver');
 const bodyParser = require('body-parser');
 
+const multer  = require('multer');
+const { spawn } = require('child_process');
+
 const app = express();
 const port = 3000;
+
+// Configuration de Multer pour stocker temporairement les fichiers audio dans le dossier 'uploads'
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/');  // Dossier de destination pour les fichiers uploadés
+    },
+    filename: function (req, file, cb) {
+      // extension .wav, 
+      cb(null, file.originalname);
+    }
+  });
+const upload = multer({ storage: storage });
+
 
 const uri = 'bolt://10.211.55.4:7687'; // default dor cypher-shell neo4j://localhost:7687
 // cypher-shell -u neo4j -p root -a neo4j://localhost:7687
@@ -560,70 +576,44 @@ app.post('/formulateQuery', (req, res) => {
         return res.json({ query: allData });
     });
 });
-// MIC POST
-app.post('/formulateQueryFromMicrophone', (req, res) => {
-    console.log("Requête depuis micro :", req.body);
-  
-    // Récupération des paramètres
-    const notes = req.body.notes;
-    let pitch_distance = req.body.pitch_distance;
-    let duration_factor = req.body.duration_factor;
-    let duration_gap = req.body.duration_gap;
-    let alpha = req.body.alpha;
-    let allow_transposition = req.body.allow_transposition;
-    let collection = req.body.collection;
-  
-    // Attribution des valeurs par défaut si nécessaire
-    if (pitch_distance == null) pitch_distance = 0;
-    if (duration_factor == null) duration_factor = 1;
-    if (duration_gap == null) duration_gap = 0;
-    if (alpha == null) alpha = 0;
-    if (allow_transposition == null) allow_transposition = false;
-  
-    // Préparation des arguments pour le script Python
-    const { spawn } = require('child_process');
-    let args = [
-      'compilation_requete_fuzzy/main_parser.py',
-      'write',
-      '-p', pitch_distance,
-      '-f', duration_factor,
-      '-g', duration_gap,
-      '-a', alpha,
-      notes
-    ];
-  
-    if (allow_transposition)
-      args.push('-t');
-  
-    if (collection != null && collection.trim() !== '') {
-      args.push('-c');
-      args.push(collection);
+
+
+// Endpoint pour traiter l'audio et créer une requête
+/** 
+*
+* @constant /createQueryFromAudio
+*/
+app.post('/createQueryFromAudio', upload.single('audio'), (req, res) => {
+    console.log("Endpoint /createQueryFromAudio appelé");
+    console.log("Fichier reçu :", req.file);
+    if (!req.file) {
+      return res.status(400).json({ error: "Aucun fichier audio envoyé" });
     }
+    
+    // Chemin du fichier audio uploadé
+    const audioFilePath = req.file.path;
+    console.log("Fichier audio reçu :", audioFilePath);
   
-    console.log("Lancement du script Python avec : ", args.join(' '));
-    let pyParserWrite = spawn('python3', args);
+    // Appeler le script Python qui traite le fichier audio
+    // "create_query_from_audio"
+    const pythonProcess = spawn('python3', [path.join(__dirname, 'create_query_from_audio.py'), audioFilePath]);
   
-    let allData = '';
-    pyParserWrite.stdout.on('data', (data) => {
-      console.log(`Données reçues: ${data}`);
-      allData += data.toString();
+    let data = '';
+    pythonProcess.stdout.on('data', (chunk) => {
+      data += chunk.toString();
     });
   
-    let errors = [];
-    pyParserWrite.stderr.on('data', (data) => {
-      console.error(`Erreur: ${data}`);
-      errors.push(data.toString());
+    pythonProcess.stderr.on('data', (errChunk) => {
+      console.error("Erreur dans le script Python :", errChunk.toString());
     });
   
-    pyParserWrite.stdout.on('close', () => {
-      console.log("Connexion fermée.");
-      if (errors.length > 0) {
-        return res.json({ error: errors.slice(-1)[0] });
+    pythonProcess.on('close', (code) => {
+      if (code !== 0) {
+        return res.status(500).json({ error: "Erreur lors du traitement de l'audio" });
       }
-      return res.json({ query: allData });
+      res.json({ query: data.trim() });
     });
   });
-  
 
 /**
  * This endpoint calls the python parser to send a fuzzy query and process the result of it.
