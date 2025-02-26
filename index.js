@@ -584,36 +584,78 @@ app.post('/formulateQuery', (req, res) => {
 * @constant /createQueryFromAudio
 */
 app.post('/createQueryFromAudio', upload.single('audio'), (req, res) => {
-    console.log("Endpoint /createQueryFromAudio appelé");
-    console.log("Fichier reçu :", req.file);
-    if (!req.file) {
-      return res.status(400).json({ error: "Aucun fichier audio envoyé" });
+    // Get the params
+    let pitch_distance = req.body.pitch_distance;
+    let duration_factor = req.body.duration_factor;
+    let duration_gap = req.body.duration_gap;
+    let alpha = req.body.alpha;
+    let allow_transposition = req.body.allow_transposition;
+    let contour_match = req.body.contour_match;
+    let collection = req.body.collection;
+
+    // Set default values if some params are null
+    if (pitch_distance == null)
+        pitch_distance = 0;
+    if (duration_factor == null)
+        duration_factor = 1;
+    if (duration_gap == null)
+        duration_gap = 0;
+    if (alpha == null)
+        alpha = 0;
+    if (allow_transposition == null)
+        allow_transposition = false;
+    if (contour_match == null)
+        contour_match = false;
+
+    // Create the connection
+    log('info', `/formulateQuery: openning connection.`);
+    const { spawn } = require('child_process');
+    let args = [
+        'compilation_requete_fuzzy/audio_parser.py',
+        '-p', pitch_distance,
+        '-f', duration_factor,
+        '-g', duration_gap,
+        '-a', alpha,
+    ];
+
+    if (allow_transposition)
+        args.push('-t');
+
+    if (contour_match)
+        args.push('-C');
+
+    if (collection != null) {
+        args.push('-c');
+        args.push(collection);
     }
-    
-    // Chemin du fichier audio uploadé
-    const audioFilePath = req.file.path;
-    console.log("Fichier audio reçu :", audioFilePath);
-  
-    // Appeler le script Python qui traite le fichier audio
-    // "create_query_from_audio"
-    const pythonProcess = spawn('python3', [path.join(__dirname, 'create_query_from_audio.py'), audioFilePath]);
-  
-    let data = '';
-    pythonProcess.stdout.on('data', (chunk) => {
-      data += chunk.toString();
+    let pyParserWrite = spawn('python3', args);
+
+    // Get the data
+    let allData = '';
+    pyParserWrite.stdout.on('data', data => {
+        log('info', `/formulateQuery: received data (${data.length} bytes) from python script.`);
+        allData += data.toString();
     });
-  
-    pythonProcess.stderr.on('data', (errChunk) => {
-      console.error("Erreur dans le script Python :", errChunk.toString());
+
+    // log stderr
+    let errors = [];
+    pyParserWrite.stderr.on('data', data => {
+        let e = handlePythonStdErr('/formulateQuery', data);
+
+        if (e != null)
+            errors.push(e);
     });
-  
-    pythonProcess.on('close', (code) => {
-      if (code !== 0) {
-        return res.status(500).json({ error: "Erreur lors du traitement de l'audio" });
-      }
-      res.json({ query: data.trim() });
+
+    // Send the data to the client
+    pyParserWrite.stdout.on('close', () => {
+        log('info', `/formulateQuery: connection closed.`);
+
+        if (errors.length > 0)
+            return res.json({ error: errors.slice(-1)[0] });
+
+        return res.json({ query: allData });
     });
-  });
+});
 
 /**
  * This endpoint calls the python parser to send a fuzzy query and process the result of it.
