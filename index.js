@@ -8,8 +8,24 @@ const express = require('express');
 const neo4j = require('neo4j-driver');
 const bodyParser = require('body-parser');
 
+const multer  = require('multer');
+const { spawn } = require('child_process');
+
 const app = express();
 const port = 3000;
+
+// Configuration de Multer pour stocker temporairement les fichiers audio dans le dossier 'uploads'
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/');  // Dossier de destination pour les fichiers uploadés
+    },
+    filename: function (req, file, cb) {
+      // extension .wav, 
+      cb(null, file.originalname);
+    }
+  });
+const upload = multer({ storage: storage });
+
 
 const uri = 'bolt://10.211.55.4:7687'; // default dor cypher-shell neo4j://localhost:7687
 // cypher-shell -u neo4j -p root -a neo4j://localhost:7687
@@ -184,6 +200,33 @@ app.get('/searchInterface', async function (req, res) {
     }
 
     res.render("search_interface", {
+        authors: authors
+    });
+});
+
+/**
+ * Route for the research page with the microphone interface.
+ *
+ * GET
+ *
+ * @constant /formulateQueryFromMicrophone
+ */
+app.get('/formulateQueryFromMicrophone', async function (req, res) {
+    let authors = [];
+
+    try {
+        // The query to get the authors is necessary to display the list of possible collections
+        const authorQuery = "MATCH (s:Score) RETURN DISTINCT s.collection";
+        let temp2 = await session.run(authorQuery);
+        temp2 = temp2.records;
+        temp2.forEach((record) => {
+            authors.push(record._fields[0]);
+        });
+    } catch(err) {
+        log('error', `/formulateQueryFromMicrophone: ${err}`)
+    }
+
+    res.render("formulateQueryFromMicrophone", {
         authors: authors
     });
 });
@@ -533,6 +576,44 @@ app.post('/formulateQuery', (req, res) => {
         return res.json({ query: allData });
     });
 });
+
+
+// Endpoint pour traiter l'audio et créer une requête
+/** 
+*
+* @constant /createQueryFromAudio
+*/
+app.post('/createQueryFromAudio', upload.single('audio'), (req, res) => {
+    console.log("Endpoint /createQueryFromAudio appelé");
+    console.log("Fichier reçu :", req.file);
+    if (!req.file) {
+      return res.status(400).json({ error: "Aucun fichier audio envoyé" });
+    }
+    
+    // Chemin du fichier audio uploadé
+    const audioFilePath = req.file.path;
+    console.log("Fichier audio reçu :", audioFilePath);
+  
+    // Appeler le script Python qui traite le fichier audio
+    // "create_query_from_audio"
+    const pythonProcess = spawn('python3', [path.join(__dirname, 'create_query_from_audio.py'), audioFilePath]);
+  
+    let data = '';
+    pythonProcess.stdout.on('data', (chunk) => {
+      data += chunk.toString();
+    });
+  
+    pythonProcess.stderr.on('data', (errChunk) => {
+      console.error("Erreur dans le script Python :", errChunk.toString());
+    });
+  
+    pythonProcess.on('close', (code) => {
+      if (code !== 0) {
+        return res.status(500).json({ error: "Erreur lors du traitement de l'audio" });
+      }
+      res.json({ query: data.trim() });
+    });
+  });
 
 /**
  * This endpoint calls the python parser to send a fuzzy query and process the result of it.
