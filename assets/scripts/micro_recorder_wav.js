@@ -81,7 +81,7 @@ function manageOptions() {
 ///////////////  ################## ///////////////////////
 ///////////////  ################## ///////////////////////
 
-export async function startRecording(duration = 5000) {
+export async function startRecording(duration = 4000) {
   if (isRecording) return;
   isRecording = true;
   try {
