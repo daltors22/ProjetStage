@@ -186,6 +186,8 @@ function sendAudioFile(blob) {
   const alphaRaw = document.getElementById('alpha-select').value;
   const alpha = parseFloat(alphaRaw) / 100;
   const transpose = document.getElementById('transpose-cb').checked;
+  const collection = document.getElementById('collections').value;
+  
 
   // Ajoute les paramètres dans le FormData
   formData.append("pitch_distance", pitchDist);
@@ -193,6 +195,7 @@ function sendAudioFile(blob) {
   formData.append("duration_gap", durationGap);
   formData.append("alpha", alpha);
   formData.append("allow_transposition", transpose);
+  formData.append("collection", collection);
 
   console.log(formData);
   fetch("/createQueryFromAudio", {
