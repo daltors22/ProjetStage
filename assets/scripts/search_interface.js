@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", init);
 
 
 //============================= Global variables =============================//
-const { Renderer, Stave, Formatter, StaveNote, Beam, Accidental, MusicXMLParser} = Vex.Flow;
+const { Renderer, Stave, Formatter, StaveNote, Accidental, Dot} = VexFlow;
 
 /** This is the array that will contain the music pattern inserted by the user */
 let melody;
@@ -156,7 +156,7 @@ const qwerty_us_to_azerty = {
  * @example
  * createQuery().then(fuzzyQuery => sendQuery(fuzzyQuery));
  */
-async function createQuery(ignore_pitch=false, ignore_octave=false, ignore_rhythm=false, pitch_dist=0, duration_factor=1, duration_gap=0, alpha=0, allow_transposition=false, /*contour_match=false*/) {
+async function createQuery(ignore_pitch=false, ignore_octave=false, ignore_rhythm=false, pitch_dist=0, duration_factor=1, duration_gap=0, alpha=0, allow_transposition=false, allow_homothety=false, incipit_only=false /*contour_match=false*/) {
     //------Create the `notes` for the python script
     
     let notes = '[';
@@ -212,6 +212,8 @@ async function createQuery(ignore_pitch=false, ignore_octave=false, ignore_rhyth
         duration_gap: duration_gap,
         alpha: alpha,
         allow_transposition: allow_transposition,
+        allow_homothety: allow_homothety,
+        incipit_only: incipit_only,
         //contour_match: contour_match,
         collection: selectedCollection
     };
@@ -332,6 +334,8 @@ const searchButtonHandler = function() {
     const duration_gap_select = document.getElementById('duration-gap-select');
     const alpha_select = document.getElementById('alpha-select');
     const transposition_cb = document.getElementById('transpose-cb');
+    const homothety_cb = document.getElementById('homothety-cb');
+    const incipit_cb = document.getElementById('incipit-cb');
     //const contour_cb = document.getElementById('contour-cb');
 
     // Check that melody is not empty
@@ -363,6 +367,8 @@ const searchButtonHandler = function() {
         duration_gap_select.value,
         alpha_select.value / 100,
         transposition_cb.checked,
+        homothety_cb.checked,
+        incipit_cb.checked,
         //contour_cb.checked
     ).then(
         fuzzyQuery => sendQuery(fuzzyQuery)
@@ -857,7 +863,7 @@ function manageOptions() {
     pitch_cb.addEventListener('click', matchPicthCbHandler);
     rhythm_cb.addEventListener('click', matchRhythmCbHandler );
 
-    transpose_cb.addEventListener('click', () => contourAndTranspositionHandler('transpose-cb'));
+    // transpose_cb.addEventListener('click', () => contourAndTranspositionHandler('transpose-cb'));
    // contour_cb.addEventListener('click', () => contourAndTranspositionHandler('contour-cb'));
 }
 
@@ -1001,18 +1007,24 @@ function manageStaveAndMelody() {
     silenceBt.addEventListener('mousedown', () => keyDown('r'));
     silenceBt.addEventListener('mouseup', () => keyUp('r'));
 
-    // Create an SVG renderer and attach it to the pentagram
-    renderer = new Renderer(pentagram, Renderer.Backends.SVG);
 
-    // Configure the rendering context
-    renderer.resize(pentagram_width, pentagram_height);
-    context = renderer.getContext();
+    /* global VexFlow */
+    VexFlow.loadFonts('Bravura', 'Academico').then(() => {
+        VexFlow.setFonts('Bravura', 'Academico');
+        // Create an SVG renderer and attach it to the pentagram
+        renderer = new Renderer(pentagram, Renderer.Backends.SVG);
 
-    // Finally create the stave with the treble symbol and draw it
-    stave = new Stave(10, 40, pentagram_width);
-    stave.addClef("treble");
-    stave.setContext(context).draw();
+        // Configure the rendering context
+        renderer.resize(pentagram_width, pentagram_height);
+        context = renderer.getContext();
+        context.setFont('Arial', 10);
 
+        // Finally create the stave with the treble symbol and draw it
+        stave = new Stave(10, 40, pentagram_width);
+        stave.addClef("treble");
+        stave.setContext(context).draw();
+    });
+    
     // The following code manages what to do when the buttons of the piano are pressed
     keysCheckbox.addEventListener("click", showHideKeys);
     volumeSlider.addEventListener("input", handleVolume);
@@ -1102,10 +1114,11 @@ function displayNote(note, keys, duration) {
     }
 
     if (note.includes('#'))
-        display_note.addAccidental(0, new Accidental("#"));
+        display_note.addModifier(new Accidental("#"), 0);
 
     if (duration.includes('d'))
-        display_note.addDotToAll();
+        // display_note.addModifier(new Dot(), 0);
+        Dot.buildAndAttach([display_note], {all: true});
 
     melody.push(display_note);
 
@@ -1199,6 +1212,8 @@ function initTooltips() {
         'pitch-lb': "Permet de prendre en compte / ignorer la hauteur des notes.",
         'rhythm-lb': "Permet de prendre en compte / ignorer le rythme (la durée) des notes.",
         'transpose-lb': "Permet d'obtenir les partitions dont la hauteur des notes de la mélodie est décalée.",
+        'homothety-lb': "Permet d'obtenir les partitions dont le tempo global de la mélodie a changé.",
+        'incipit-lb': "Permet de restreindre la recherche aux incipits.",
         //'contour-lb': "Garde seulement le signe des intervalles entres les notes (haut, bas, égal).",
         'pitch-dist-lb': "Permet d'augmenter la tolérance sur la hauteur de note (en tons), ou sur les intervalles (si transposition est coché).",
         'duration-dist-lb': "Permet d'augmenter la tolérance sur la durée des notes (coefficient multiplicateur).",

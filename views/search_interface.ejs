@@ -18,7 +18,11 @@
   
 
     <!-- Vexflow for the music notes -->
+<<<<<<< HEAD
     <!--<script src="https://unpkg.com/vexflow/releases/vexflow-debug.js"></script>-->
+=======
+    <script src="./scripts/vexflow-core.js"></script>
+>>>>>>> main
 
     <!-- Verovio for the svg representation of the scores previews -->
     <script src="./scripts/verovio-toolkit-wasm.js" defer></script>
@@ -203,6 +207,14 @@
                   <input id='transpose-cb' type='checkbox'>
                   Autoriser les transpositions
                   <!-- <span class='tooltiptext'>Permet d'obtenir les partitions dont la hauteur des notes de la mélodie est décalée</span> -->
+                </label><br>
+                <label id='homothety-lb' class='tooltip-lb'>
+                  <input id='homothety-cb' type='checkbox'>
+                  Autoriser les variations de tempo
+                </label><br>
+                <label id='incipit-lb' class='tooltip-lb'>
+                  <input id='incipit-cb' type='checkbox'>
+                  Chercher uniquement dans les incipits
                 </label><br>
                 <!--<label id='contour-lb' class='tooltip-lb'>
                   <input id='contour-cb' type='checkbox'>

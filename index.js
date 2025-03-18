@@ -500,7 +500,6 @@ app.post('/compileFuzzy', (req, res) => {
  * @constant /formulateQuery
  */
 app.post('/formulateQuery', (req, res) => {
-    console.log(req.body);
     // Get the params
     const notes = req.body.notes;
     console.log(notes);
@@ -509,6 +508,8 @@ app.post('/formulateQuery', (req, res) => {
     let duration_gap = req.body.duration_gap;
     let alpha = req.body.alpha;
     let allow_transposition = req.body.allow_transposition;
+    let allow_homothety = req.body.allow_homothety;
+    let incipit_only = req.body.incipit_only;
     let contour_match = req.body.contour_match;
     let collection = req.body.collection;
 
@@ -523,6 +524,8 @@ app.post('/formulateQuery', (req, res) => {
         alpha = 0;
     if (allow_transposition == null)
         allow_transposition = false;
+    if (allow_homothety == null)
+        allow_homothety = false;
     if (contour_match == null)
         contour_match = false;
 
@@ -539,9 +542,14 @@ app.post('/formulateQuery', (req, res) => {
         '-a', alpha,
         notes
     ];
-    console.log(args);
     if (allow_transposition)
         args.push('-t');
+
+    if (allow_homothety)
+        args.push('-H');  
+
+    if (incipit_only)
+    args.push('-io');
 
     if (contour_match)
         args.push('-C');
@@ -550,6 +558,7 @@ app.post('/formulateQuery', (req, res) => {
         args.push('-c');
         args.push(collection);
     }
+    console.log(args);
     let pyParserWrite = spawn('python3', args);
 
     // Get the data
@@ -558,7 +567,6 @@ app.post('/formulateQuery', (req, res) => {
         log('info', `/formulateQuery: received data (${data.length} bytes) from python script.`);
         allData += data.toString();
     });
-    console.log(data);
     // log stderr
     let errors = [];
     pyParserWrite.stderr.on('data', data => {
