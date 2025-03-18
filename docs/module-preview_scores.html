@@ -1,0 +1,2835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>preview_scores - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="index.module_js.html">index.js</a><ul class='methods'><li data-type='method'><a href="index.module_js.html#~handlePythonStdErr">handlePythonStdErr</a></li><li data-type='method'><a href="index.module_js.html#~log">log</a></li><li data-type='method'><a href="index.module_js.html#~queryEditsDB">queryEditsDB</a></li></ul></li><li><a href="module-collection_script.html">collection_script</a><ul class='methods'><li data-type='method'><a href="module-collection_script.html#~authorButtonHandler">authorButtonHandler</a></li><li data-type='method'><a href="module-collection_script.html#~createArchivesLinks">createArchivesLinks</a></li><li data-type='method'><a href="module-collection_script.html#~fetchPageData">fetchPageData</a></li><li data-type='method'><a href="module-collection_script.html#~init">init</a></li></ul></li><li><a href="module-manual_query_script.html">manual_query_script</a><ul class='methods'><li data-type='method'><a href="module-manual_query_script.html#~fuzzyCbHandler">fuzzyCbHandler</a></li><li data-type='method'><a href="module-manual_query_script.html#~init">init</a></li><li data-type='method'><a href="module-manual_query_script.html#~postAndDisplayFuzzyQuery">postAndDisplayFuzzyQuery</a></li><li data-type='method'><a href="module-manual_query_script.html#~postAndDisplayQuery">postAndDisplayQuery</a></li><li data-type='method'><a href="module-manual_query_script.html#~postFuzzy">postFuzzy</a></li><li data-type='method'><a href="module-manual_query_script.html#~submitHandler">submitHandler</a></li><li data-type='method'><a href="module-manual_query_script.html#~textOutCbHandler">textOutCbHandler</a></li></ul></li><li><a href="module-paginated_results.html">paginated_results</a><ul class='methods'><li data-type='method'><a href="module-paginated_results.html#.ensureTkInitialized">ensureTkInitialized</a></li><li data-type='method'><a href="module-paginated_results.html#~csvBtHandler">csvBtHandler</a></li><li data-type='method'><a href="module-paginated_results.html#~dataToCSV">dataToCSV</a></li><li data-type='method'><a href="module-paginated_results.html#~getPageData">getPageData</a></li><li data-type='method'><a href="module-paginated_results.html#~getPageN">getPageN</a></li><li data-type='method'><a href="module-paginated_results.html#~getPatternString">getPatternString</a></li><li data-type='method'><a href="module-paginated_results.html#~hideNav">hideNav</a></li><li data-type='method'><a href="module-paginated_results.html#~init">init</a></li><li data-type='method'><a href="module-paginated_results.html#~loadPageN">loadPageN</a></li><li data-type='method'><a href="module-paginated_results.html#~nbPerPageHandler">nbPerPageHandler</a></li><li data-type='method'><a href="module-paginated_results.html#~nextDataPageHandler">nextDataPageHandler</a></li><li data-type='method'><a href="module-paginated_results.html#~prevDataPageHandler">prevDataPageHandler</a></li><li data-type='method'><a href="module-paginated_results.html#~refreshPageNbInfos">refreshPageNbInfos</a></li><li data-type='method'><a href="module-paginated_results.html#~saveFile">saveFile</a></li><li data-type='method'><a href="module-paginated_results.html#~showNav">showNav</a></li><li data-type='method'><a href="module-paginated_results.html#~spinBoxChangedHandler">spinBoxChangedHandler</a></li></ul></li><li><a href="module-preview_scores.html">preview_scores</a><ul class='methods'><li data-type='method'><a href="module-preview_scores.html#~createPreview">createPreview</a></li><li data-type='method'><a href="module-preview_scores.html#~createPreviews_1">createPreviews_1</a></li><li data-type='method'><a href="module-preview_scores.html#~createPreviews_2">createPreviews_2</a></li><li data-type='method'><a href="module-preview_scores.html#~extractMelodyFromQuery">extractMelodyFromQuery</a></li><li data-type='method'><a href="module-preview_scores.html#~fillPreview">fillPreview</a></li><li data-type='method'><a href="module-preview_scores.html#~fillPreviews">fillPreviews</a></li><li data-type='method'><a href="module-preview_scores.html#~getGradientColor">getGradientColor</a></li><li data-type='method'><a href="module-preview_scores.html#~getSourceAndCollection">getSourceAndCollection</a></li><li data-type='method'><a href="module-preview_scores.html#~interpolateBetweenColors">interpolateBetweenColors</a></li><li data-type='method'><a href="module-preview_scores.html#~loadPreviews">loadPreviews</a></li><li data-type='method'><a href="module-preview_scores.html#~makeUrl">makeUrl</a></li><li data-type='method'><a href="module-preview_scores.html#~unifyResults">unifyResults</a></li></ul></li><li><a href="module-result_script.html">result_script</a><ul class='methods'><li data-type='method'><a href="module-result_script.html#~createMatchesHighlightToggles">createMatchesHighlightToggles</a></li><li data-type='method'><a href="module-result_script.html#~hideNoteInfo">hideNoteInfo</a></li><li data-type='method'><a href="module-result_script.html#~highlightMatch">highlightMatch</a></li><li data-type='method'><a href="module-result_script.html#~init">init</a></li><li data-type='method'><a href="module-result_script.html#~makeAMatchToggle">makeAMatchToggle</a></li><li data-type='method'><a href="module-result_script.html#~makeAPatternHoverBox">makeAPatternHoverBox</a></li><li data-type='method'><a href="module-result_script.html#~makeGradientLegend">makeGradientLegend</a></li><li data-type='method'><a href="module-result_script.html#~makeMatches">makeMatches</a></li><li data-type='method'><a href="module-result_script.html#~makePattern">makePattern</a></li><li data-type='method'><a href="module-result_script.html#~makePatternHoverBoxes">makePatternHoverBoxes</a></li><li data-type='method'><a href="module-result_script.html#~matchAllToggleHandler">matchAllToggleHandler</a></li><li data-type='method'><a href="module-result_script.html#~midiHightlightingHandler">midiHightlightingHandler</a></li><li data-type='method'><a href="module-result_script.html#~nextPageHandler">nextPageHandler</a></li><li data-type='method'><a href="module-result_script.html#~playMIDIHandler">playMIDIHandler</a></li><li data-type='method'><a href="module-result_script.html#~prevPageHandler">prevPageHandler</a></li><li data-type='method'><a href="module-result_script.html#~readFromUrl">readFromUrl</a></li><li data-type='method'><a href="module-result_script.html#~refreshHighlight">refreshHighlight</a></li><li data-type='method'><a href="module-result_script.html#~refreshPagination">refreshPagination</a></li><li data-type='method'><a href="module-result_script.html#~setRightInfos">setRightInfos</a></li><li data-type='method'><a href="module-result_script.html#~showNoteInfo">showNoteInfo</a></li><li data-type='method'><a href="module-result_script.html#~stopMIDIHandler">stopMIDIHandler</a></li></ul></li><li><a href="module-search_interface.html">search_interface</a><ul class='methods'><li data-type='method'><a href="module-search_interface.html#~changeLastNoteRhythm">changeLastNoteRhythm</a></li><li data-type='method'><a href="module-search_interface.html#~changeOctave">changeOctave</a></li><li data-type='method'><a href="module-search_interface.html#~clear_all_pattern">clear_all_pattern</a></li><li data-type='method'><a href="module-search_interface.html#~contourAndTranspositionHandler">contourAndTranspositionHandler</a></li><li data-type='method'><a href="module-search_interface.html#~createQuery">createQuery</a></li><li data-type='method'><a href="module-search_interface.html#~displayNote">displayNote</a></li><li data-type='method'><a href="module-search_interface.html#~getNextWhiteKey">getNextWhiteKey</a></li><li data-type='method'><a href="module-search_interface.html#~handleVolume">handleVolume</a></li><li data-type='method'><a href="module-search_interface.html#~hideTooltip">hideTooltip</a></li><li data-type='method'><a href="module-search_interface.html#~init">init</a></li><li data-type='method'><a href="module-search_interface.html#~initTooltips">initTooltips</a></li><li data-type='method'><a href="module-search_interface.html#~keyDown">keyDown</a></li><li data-type='method'><a href="module-search_interface.html#~keyListener">keyListener</a></li><li data-type='method'><a href="module-search_interface.html#~keyUp">keyUp</a></li><li data-type='method'><a href="module-search_interface.html#~manageCollections">manageCollections</a></li><li data-type='method'><a href="module-search_interface.html#~manageOptions">manageOptions</a></li><li data-type='method'><a href="module-search_interface.html#~manageStaveAndMelody">manageStaveAndMelody</a></li><li data-type='method'><a href="module-search_interface.html#~matchPicthCbHandler">matchPicthCbHandler</a></li><li data-type='method'><a href="module-search_interface.html#~matchRhythmCbHandler">matchRhythmCbHandler</a></li><li data-type='method'><a href="module-search_interface.html#~playMelody">playMelody</a></li><li data-type='method'><a href="module-search_interface.html#~playMelodyBtHandler">playMelodyBtHandler</a></li><li data-type='method'><a href="module-search_interface.html#~playNoteWithRhythm">playNoteWithRhythm</a></li><li data-type='method'><a href="module-search_interface.html#~playTune">playTune</a></li><li data-type='method'><a href="module-search_interface.html#~remove_last_note">remove_last_note</a></li><li data-type='method'><a href="module-search_interface.html#~resizeStave">resizeStave</a></li><li data-type='method'><a href="module-search_interface.html#~searchButtonHandler">searchButtonHandler</a></li><li data-type='method'><a href="module-search_interface.html#~sendQuery">sendQuery</a></li><li data-type='method'><a href="module-search_interface.html#~showHideKeys">showHideKeys</a></li><li data-type='method'><a href="module-search_interface.html#~showTooltip">showTooltip</a></li><li data-type='method'><a href="module-search_interface.html#~sleep">sleep</a></li><li data-type='method'><a href="module-search_interface.html#~stopTune">stopTune</a></li></ul></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">preview_scores</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description usertext"><p>Manage the creation of previews for the scores.</p></div>
+            
+
+            
+                
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Manage the creation of previews for the scores.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="~max_url_length"><span class="type-signature type-signature-inner, constant">(inner, constant) </span>max_url_length<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The maximum length for urls.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The maximum length for urls.</p>
+</div>
+
+
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="~createPreview"><span class="type-signature type-signature-inner">(inner) </span>createPreview<span class="signature">(url, source, nb_occ<span class="signature-attributes">opt</span>, overall_degree<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Create html <a> for the given score.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line255">line 255</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the link that will be used when the user clicks on the preview ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>source</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the filename of the score ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nb_occ</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>if not <code>null</code>, display the number of occurrences below the score name ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>overall_degree</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">null</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>if not <code>null</code>, display the overall degree of the match below the score name (or nb of occurrences).</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>a html &lt;a&gt; element containing all the above information.</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~createPreviews_1"><span class="type-signature type-signature-inner">(inner) </span>createPreviews_1<span class="signature">(results_container, results, pattern<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Create new score previews in the results container that fits the current data.
+Used by collection page.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line442">line 442</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>results_container</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JQuery.&lt;HTMLElement></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the html element that will contain the previews (e.g <code>$('#results_container')</code>) ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>results</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the query result containing all the scores ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pattern</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>the search pattern.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~createPreviews_2"><span class="type-signature type-signature-async, inner">(async, inner) </span>createPreviews_2<span class="signature">(results_container, results, pattern<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Create new score previews in the results container that fits the current data.
+Used by piano interface page.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line461">line 461</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>results_container</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JQuery.&lt;HTMLElement></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the html element that will contain the previews (e.g <code>$('#results_container')</code>) ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>results</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the query result containing all the scores ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pattern</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>the search pattern.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~extractMelodyFromQuery"><span class="type-signature type-signature-inner">(inner) </span>extractMelodyFromQuery<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Extract the notes from a query using regular expressions.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line129">line 129</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>the notes in the format described in <code>makeUrl</code></p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~fillPreview"><span class="type-signature type-signature-async, inner">(async, inner) </span>fillPreview<span class="signature">(score_div, score_path, matches<span class="signature-attributes">opt</span>, parentWidth<span class="signature-attributes">opt</span>, parentHeight<span class="signature-attributes">opt</span>, zoom<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Uses verovio to generate a svg preview of the score (first page) and set it into <code>score_div</code>.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line309">line 309</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>score_div</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLElement</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the html element that will contain the svg preview ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>score_path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the (relative) path to the score (<code>./data/[collection name]/[score name]</code>) ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>matches</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Array.&lt;json>></span>
+|
+
+<span class="param-type">null</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>an array of matches. A Match is an array of json elements.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>parentWidth</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>180</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>the width of the parent (used to calculate the width of the svg) ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>parentHeight</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>250</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>the height of the parent (used to calculate the height of the svg) ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>zoom</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>20</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>the zoom for the svg ;</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~fillPreviews"><span class="type-signature type-signature-inner">(inner) </span>fillPreviews<span class="signature">(results)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Fills the score previews with svg previews.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line512">line 512</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>results</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>results from the query to get the collection ;</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getGradientColor"><span class="type-signature type-signature-inner">(inner) </span>getGradientColor<span class="signature">(degree)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Return the color to use.</p>
+<p>Internally it uses three colours.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line380">line 380</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>degree</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">float</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the match degree for a given note</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>a color corresponding best to <code>degree</code></p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~getSourceAndCollection"><span class="type-signature type-signature-inner">(inner) </span>getSourceAndCollection<span class="signature">(result)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Try to retreive <code>source</code> and <code>collection</code> from <code>result</code></p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line151">line 151</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>result</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the json object.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>{source: <code>source</code>, collection: <code>collection</code>}</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~interpolateBetweenColors"><span class="type-signature type-signature-inner">(inner) </span>interpolateBetweenColors<span class="signature">(fromColor, toColor, percent)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Return a color between <code>fromColor</code> and <code>toColor</code>, at <code>percent</code>%</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line363">line 363</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fromColor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the origin color (0%). Format : {r: [nb], g: [nb], b: [nb]}, with 0 &lt;= nb &lt; 256 ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>toColor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the destination color (100%). Format : {r: [nb], g: [nb], b: [nb]} ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>percent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the percentage.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>an RGB string.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~loadPreviews"><span class="type-signature type-signature-async, inner">(async, inner) </span>loadPreviews<span class="signature">(results_container, results, pattern<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Create and fill the previews.</p>
+<p>Clears the current results container and redirect toward the right function,
+that will create new score previews in it that fits the current data.</p>
+<p>there are multiple function because the query results are different in format.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line415">line 415</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>results_container</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JQuery.&lt;HTMLElement></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the html element that will contain the previews (e.g <code>$('#results_container')</code>) ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>results</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the query result containing all the scores ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pattern</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>the search pattern.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~makeUrl"><span class="type-signature type-signature-inner">(inner) </span>makeUrl<span class="signature">(collection, source, pattern<span class="signature-attributes">opt</span>, matches<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Make the url for the previews.</p>
+<p>It ensures that the url is not longer than <code>max_url_length</code> (and removes complete matches).
+As the matches are ordered, it removes the last ones, which are the less acurate ones.</p>
+<p>Format of the url :</p>
+<pre class="prettyprint source"><code>/result?author=[collection]&score_name=[score name]
+&pattern=[searched pattern]
+&matches=[matches]
+</code></pre>
+<p>The searched pattern is encoded in the following format: <code>[class]/[octave]_[duration],...</code>, e.g <code>c/5_4,b/4_8,bs/4_8,g/4_8,a/4_8</code>.</p>
+<p>The matches are encoded in the following format: <code>[match 1]:[match 2]:...:[match m]</code>,
+where <code>[match k]</code> is encoded in the following format: <code>[note 1];[note 2];...;[note n]</code>,
+where <code>[note i]</code> is encoded in the following format:</p>
+<pre class="prettyprint source"><code>[id],[overall degree],[pitch degree],[duration degree],[sequencing degree]
+</code></pre>
+<p>e.g :</p>
+<pre class="prettyprint source"><code>abcdef,100,100,100,100;...;abcdeh,100,100,100,100:...
+</code></pre></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line205">line 205</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>collection</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the name of the collection to which the score belongs ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>source</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>the filename of the score ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>pattern</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">null</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>the search pattern, given in the format described above ;</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>matches</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Array.&lt;json>></span>
+|
+
+<span class="param-type">null</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>null</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>an array of matches. A Match is an array of json elements.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="~unifyResults"><span class="type-signature type-signature-inner">(inner) </span>unifyResults<span class="signature">(queryResults)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>The results are returned match by match. This functions group the matches by source.</p>
+<p>It count the number of occurrences, and add the note IDs when possible.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="assets_scripts_preview_scores.js.html">assets/scripts/preview_scores.js</a>, <a href="assets_scripts_preview_scores.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>there is too much complexity in this function, as it was needed to handle all the cases of different json results formats. It should not be the case now (unless for manual queries that are not fuzzy).</li>
+        </ul>
+    </dd>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>queryResults</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the result of the query ;</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>result</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the content of the result.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>an array of results correctly filtered, in the following format : <code>[\{source, number_of_occurrences: &lt;nb&gt;, notes_id: \{id: degree, ...\}, matches: m\}, ...]</code>,
+where <code>m</code> is a matrix of notes : <code>m[k]</code> is the <code>k</code>-th match in the source file, containing the notes <code>m[k][0]</code> to <code>m[k][n - 1]</code> (where <code>n</code> would be the number of notes in the search pattern).</p>
+<p>If the query was not fuzzy, then the field <code>matches</code> will not be set.</p>
+</div>
+
+
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.4</a> on Mon Dec 02 2024 11:43:27 GMT+0100 (Central European Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
