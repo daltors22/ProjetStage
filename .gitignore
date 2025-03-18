@@ -4,9 +4,8 @@ assets/data/
 venv/
 uploads/
 package-lock.json
+backend/
+frontend/
 
 .database_password
 .DS_Store
-
-backend
-frontend
