@@ -1358,3 +1358,63 @@ input.addEventListener('keydown', (event) => {
     }
 });
 });
+
+/**
+ * function to lock options values
+ */
+const pitchInput = document.getElementById('pitch-dist-select');
+const durationFactorSelect = document.getElementById('duration-factor-select');
+const durationGapSelect = document.getElementById('duration-gap-select');
+const alphaSelect = document.getElementById('alpha-select');
+
+pitchInput.addEventListener('blur', () => {
+  let val = parseFloat(pitchInput.value);
+
+  if (isNaN(val)) {
+    //pitchInput.value =  ‘ ’;
+    return;
+  }
+
+  // Clamp la valeur dans [0, 2]
+  if (val < 0) val = 0;
+  if (val > 2) val = 2;
+  
+  pitchInput.value = val;
+});
+
+durationFactorSelect.addEventListener('blur', () => {
+    let val2 = parseFloat(durationFactorSelect.value);
+
+    if (isNaN(val2)) {
+        return;
+    }
+
+    if (val2 < 0) val2 = 0;
+    if (val2 > 2) val2 = 0;
+
+    durationFactorSelect.value = val2;
+})
+
+durationGapSelect.addEventListener('blur', () => {
+    let val3 = parseFloat(durationGapSelect.val);
+
+    if(isNaN(val3)) {
+        return;
+    }
+
+    if (val3 < 0) val3 = 0;
+    if (val3 > 2) val3 = 0;
+
+    durationGapSelect.value = val3;
+})
+
+alphaSelect.addEventListener('blur', () => {
+    let val4 = parseFloat(alphaSelect.value);
+
+    if (isNaN(val4)) {
+        return;
+    }
+
+    if (val4 < 0) val4 = 0;
+    if (val4 > 0) val4 = 0;
+})
