@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-const uri = 'neo4j://localhost:7687'; // default dor cypher-shell neo4j://localhost:7687
+const uri = 'bolt://10.211.55.4:7687'; // default dor cypher-shell neo4j://localhost:7687
 // cypher-shell -u neo4j -p root -a neo4j://localhost:7687
 const user = 'neo4j'
 // const password = '12345678';
