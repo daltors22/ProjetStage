@@ -187,22 +187,22 @@ app.get("/manualQuery", function (req, res) {
  */
 app.get('/searchInterface', async function (req, res) {
     let authors = [];
+    const session = driver.session(); // nouvelle session pour cette requête
 
     try {
         // The query to get the authors is necessary to display the list of possible collections
         const authorQuery = "MATCH (s:Score) RETURN DISTINCT s.collection";
-        let temp2 = await session.run(authorQuery);
-        temp2 = temp2.records;
-        temp2.forEach((record) => {
+        const result = await session.run(authorQuery);
+        result.records.forEach((record) => {
             authors.push(record._fields[0]);
         });
-    } catch(err) {
-        log('error', `/searchInterface: ${err}`)
+    } catch (err) {
+        log('error', `/searchInterface: ${err}`);
+    } finally {
+        await session.close(); // fermer la session en fin de traitement
     }
 
-    res.render("search_interface", {
-        authors: authors
-    });
+    res.render("search_interface", { authors: authors });
 });
 
 /**
@@ -214,23 +214,26 @@ app.get('/searchInterface', async function (req, res) {
  */
 app.get('/formulateQueryFromMicrophone', async function (req, res) {
     let authors = [];
+    const session = driver.session(); // nouvelle session pour cette requête
 
     try {
         // The query to get the authors is necessary to display the list of possible collections
         const authorQuery = "MATCH (s:Score) RETURN DISTINCT s.collection";
-        let temp2 = await session.run(authorQuery);
-        temp2 = temp2.records;
-        temp2.forEach((record) => {
+        const result = await session.run(authorQuery);
+        result.records.forEach((record) => {
             authors.push(record._fields[0]);
         });
-    } catch(err) {
-        log('error', `/formulateQueryFromMicrophone: ${err}`)
+    } catch (err) {
+        log('error', `/formulateQueryFromMicrophone: ${err}`);
+    } finally {
+        await session.close(); // Fermer la session pour éviter les problèmes de bookmarks réutilisés
     }
 
     res.render("formulateQueryFromMicrophone", {
         authors: authors
     });
 });
+
 
 /**
  * Route for help page

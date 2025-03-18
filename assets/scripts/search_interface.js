@@ -1079,6 +1079,7 @@ function manageCollections() {
 
     // Initial display: select the first collection by default
     selectedCollection = select.options[0].value; // Default to the first option
+    console.log(selectedCollection); // here -> need logic if can't access property 'value' (undefined)
 
     select.addEventListener("change", function() {
         const selectedOption = this.options[this.selectedIndex];
