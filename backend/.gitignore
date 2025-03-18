@@ -1,0 +1,8 @@
+node_modules/
+data/
+venv/
+
+.database_password
+.DS_Store
+
+__pycache__
